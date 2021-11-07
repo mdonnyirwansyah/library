@@ -12,6 +12,12 @@
       </a>
     </li>
 
+    <li class="{{ request()->is('kelas') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('kelas.index') }}">
+          <i class="fas fa-school"></i> <span>Kelas</span>
+        </a>
+    </li>
+
     <li class="{{ request()->is('kategori') ? 'active' : '' }}">
       <a class="nav-link" href="{{ route('kategori.index') }}">
         <i class="fas fa-tags"></i> <span>Kategori</span>
