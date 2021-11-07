@@ -18,6 +18,12 @@
         </a>
     </li>
 
+    <li class="{{ request()->is('anggota') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('anggota.index') }}">
+          <i class="fas fa-users"></i> <span>Anggota</span>
+        </a>
+    </li>
+
     <li class="{{ request()->is('kategori') ? 'active' : '' }}">
       <a class="nav-link" href="{{ route('kategori.index') }}">
         <i class="fas fa-tags"></i> <span>Kategori</span>

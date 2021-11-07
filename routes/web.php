@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnggotaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\KelasController;
@@ -18,15 +19,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', DashboardController::class)->name('dashboard');
 
-Route::prefix('kategori')->name('kategori.')->group(function () {
-    Route::get('', [KategoriController::class, 'index'])->name('index');
-    Route::get('tambah', [KategoriController::class, 'create'])->name('create');
-    Route::post('', [KategoriController::class, 'store'])->name('store');
-    Route::get('edit/{kategori:slug}', [KategoriController::class, 'edit'])->name('edit');
-    Route::put('{kategori:slug}', [KategoriController::class, 'update'])->name('update');
-    Route::delete('{kategori:slug}', [KategoriController::class, 'destroy'])->name('destroy');
-});
-
 Route::prefix('kelas')->name('kelas.')->group(function () {
     Route::get('', [KelasController::class, 'index'])->name('index');
     Route::get('tambah', [KelasController::class, 'create'])->name('create');
@@ -34,4 +26,22 @@ Route::prefix('kelas')->name('kelas.')->group(function () {
     Route::get('edit/{kelas:slug}', [KelasController::class, 'edit'])->name('edit');
     Route::put('{kelas:slug}', [KelasController::class, 'update'])->name('update');
     Route::delete('{kelas:slug}', [KelasController::class, 'destroy'])->name('destroy');
+});
+
+Route::prefix('anggota')->name('anggota.')->group(function () {
+    Route::get('', [AnggotaController::class, 'index'])->name('index');
+    Route::get('tambah', [AnggotaController::class, 'create'])->name('create');
+    Route::post('', [AnggotaController::class, 'store'])->name('store');
+    Route::get('edit/{anggota:slug}', [AnggotaController::class, 'edit'])->name('edit');
+    Route::put('{anggota:slug}', [AnggotaController::class, 'update'])->name('update');
+    Route::delete('{anggota:slug}', [AnggotaController::class, 'destroy'])->name('destroy');
+});
+
+Route::prefix('kategori')->name('kategori.')->group(function () {
+    Route::get('', [KategoriController::class, 'index'])->name('index');
+    Route::get('tambah', [KategoriController::class, 'create'])->name('create');
+    Route::post('', [KategoriController::class, 'store'])->name('store');
+    Route::get('edit/{kategori:slug}', [KategoriController::class, 'edit'])->name('edit');
+    Route::put('{kategori:slug}', [KategoriController::class, 'update'])->name('update');
+    Route::delete('{kategori:slug}', [KategoriController::class, 'destroy'])->name('destroy');
 });
