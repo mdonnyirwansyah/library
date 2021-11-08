@@ -35,5 +35,11 @@
         <i class="fas fa-book"></i> <span>Buku</span>
       </a>
     </li>
+
+    <li class="{{ request()->is('peminjaman') ? 'active' : '' }}">
+      <a class="nav-link" href="{{ route('peminjaman.index') }}">
+        <i class="fas fa-upload"></i> <span>Peminjaman</span>
+      </a>
+    </li>
   </ul>
 </aside>

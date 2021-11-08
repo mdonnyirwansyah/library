@@ -2,11 +2,11 @@
 
 namespace App\DataTables;
 
-use App\Models\Buku;
+use App\Models\Peminjaman;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
 
-class BukuDataTable extends DataTable
+class PeminjamanDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -19,18 +19,24 @@ class BukuDataTable extends DataTable
         return datatables()
             ->eloquent($query)
             ->addIndexColumn()
-            ->addColumn('kategori', function ($data) {
-                return $data->kategori->nama;
+            ->addColumn('anggota', function ($data) {
+                return $data->anggota->nama;
+            })
+            ->addColumn('buku', function ($data) {
+                return $data->buku()->get()->implode('judul', ', ');
             })
             ->addColumn('action', function ($data) {
                 return '
-                    <a data-toggle="tooltip" data-placement="top" title="Edit" href="'.route('buku.edit', $data).'" class="btn btn-icon">
+                    <a data-toggle="tooltip" data-placement="top" title="Edit" href="'.route('peminjaman.edit', $data).'" class="btn btn-icon">
                         <i class="fas fa-pen text-info"></i>
                     </a>
-                    <button data-toggle="tooltip" data-placement="top" title="Hapus" onClick="deleteRecord('.$data->id.')" id="delete-'.$data->id.'" delete-route="'.route('buku.destroy', $data).'" class="btn btn-icon">
+                    <button data-toggle="tooltip" data-placement="top" title="Hapus" onClick="deleteRecord('.$data->id.')" id="delete-'.$data->id.'" delete-route="'.route('peminjaman.destroy', $data).'" class="btn btn-icon">
                         <i class="fas fa-trash text-danger"></i>
                     </button>
                 ';
+            })
+            ->editColumn('created_at', function ($data) {
+                return $data->created_at->format('Y-m-d H:i:s');
             })
             ->rawColumns(['action']);
     }
@@ -38,10 +44,10 @@ class BukuDataTable extends DataTable
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Buku $model
+     * @param \App\Models\Peminjaman $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Buku $model)
+    public function query(Peminjaman $model)
     {
         return $model->newQuery();
     }
@@ -54,10 +60,10 @@ class BukuDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('buku-table')
+                    ->setTableId('peminjaman-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-                    ->orderBy([3, 'ASC']);
+                    ->orderBy([1, 'ASC']);
     }
 
     /**
@@ -69,10 +75,10 @@ class BukuDataTable extends DataTable
     {
         return [
             Column::make('DT_RowIndex')->searchable(false)->title('No')->width(50),
-            Column::make('kode'),
-            Column::make('judul'),
-            Column::computed('kategori'),
-            Column::make('stok'),
+            Column::make('created_at')->title('Tanggal'),
+            Column::make('id')->title('ID'),
+            Column::computed('anggota')->title('Nama'),
+            Column::computed('buku'),
             Column::computed('action')->title('Aksi')->width(85),
         ];
     }
@@ -84,6 +90,6 @@ class BukuDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'Buku_' . date('YmdHis');
+        return 'Peminjaman_' . date('YmdHis');
     }
 }

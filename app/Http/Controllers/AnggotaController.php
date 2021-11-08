@@ -45,6 +45,17 @@ class AnggotaController extends Controller
         return response()->json(['error' => $validator->errors()]);
     }
 
+    public function search(Request $request)
+    {
+        $anggota = Anggota::where('nis', $request->nis)->first();
+
+        if ($anggota) {
+            return response()->json(['success' => $anggota->nama]);
+        }
+
+        return response()->json(['error' => 'NIS tidak terdaftar!']);
+    }
+
     public function edit(Anggota $anggota)
     {
         $kelas = Kelas::all();

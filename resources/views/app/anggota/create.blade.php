@@ -18,7 +18,7 @@
     $(document).ready( function() {
         $('.select2').select2({
             theme: 'bootstrap4',
-            placeholder: 'Pilih Kelas',
+            placeholder: 'Pilih kelas',
         });
 
         $('#form-action').submit(function (e) {

@@ -17,10 +17,11 @@ class CreateBukusTable extends Migration
             $table->id();
             $table->string('kode');
             $table->string('judul');
-            $table->foreignId('kategori_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('kategori_id')->constrained('kategori', 'id')->onDelete('cascade')->onUpdate('cascade');
             $table->string('pengarang');
             $table->string('penerbit');
             $table->integer('tahun');
+            $table->integer('stok');
             $table->string('slug');
             $table->timestamps();
         });
@@ -33,6 +34,6 @@ class CreateBukusTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bukus');
+        Schema::dropIfExists('buku');
     }
 }

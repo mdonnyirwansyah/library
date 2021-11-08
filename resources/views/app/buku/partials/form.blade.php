@@ -55,6 +55,14 @@
 </div>
 
 <div class="form-group row mb-4">
+    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3" for="stok">Stok</label>
+    <div class="col-sm-12 col-md-7">
+        <input type="number" class="form-control" name="stok" id="stok" @isset($buku) value="{{ $buku->stok }}" @endisset />
+        <small class="invalid-feedback stok_err"></small>
+    </div>
+</div>
+
+<div class="form-group row mb-4">
   <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
   <div class="col-sm-12 col-md-7">
     <button class="btn btn-primary" id="btn">

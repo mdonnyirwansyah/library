@@ -32,6 +32,7 @@ class BukuController extends Controller
             'pengarang' => 'required',
             'penerbit' => 'required',
             'tahun' => 'required',
+            'stok' => 'required',
         ]);
 
         if ($validator->passes()) {
@@ -42,6 +43,7 @@ class BukuController extends Controller
             $buku->pengarang = $request->pengarang;
             $buku->penerbit = $request->penerbit;
             $buku->tahun = $request->tahun;
+            $buku->stok = $request->stok;
             $buku->slug = Str::slug($request->judul);
             $buku->save();
 
@@ -67,6 +69,7 @@ class BukuController extends Controller
             'pengarang' => 'required',
             'penerbit' => 'required',
             'tahun' => 'required',
+            'stok' => 'required',
         ]);
 
         if ($validator->passes()) {
@@ -76,6 +79,7 @@ class BukuController extends Controller
             $buku->pengarang = $request->pengarang;
             $buku->penerbit = $request->penerbit;
             $buku->tahun = $request->tahun;
+            $buku->stok = $request->stok;
             $buku->slug = Str::slug($request->judul);
             $buku->save();
 

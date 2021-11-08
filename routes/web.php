@@ -5,6 +5,7 @@ use App\Http\Controllers\BukuController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\KelasController;
+use App\Http\Controllers\PeminjamanController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,6 +34,7 @@ Route::prefix('anggota')->name('anggota.')->group(function () {
     Route::get('', [AnggotaController::class, 'index'])->name('index');
     Route::get('tambah', [AnggotaController::class, 'create'])->name('create');
     Route::post('', [AnggotaController::class, 'store'])->name('store');
+    Route::post('search', [AnggotaController::class, 'search'])->name('search');
     Route::get('edit/{anggota:slug}', [AnggotaController::class, 'edit'])->name('edit');
     Route::put('{anggota:slug}', [AnggotaController::class, 'update'])->name('update');
     Route::delete('{anggota:slug}', [AnggotaController::class, 'destroy'])->name('destroy');
@@ -54,4 +56,13 @@ Route::prefix('buku')->name('buku.')->group(function () {
     Route::get('edit/{buku:slug}', [BukuController::class, 'edit'])->name('edit');
     Route::put('{buku:slug}', [BukuController::class, 'update'])->name('update');
     Route::delete('{buku:slug}', [BukuController::class, 'destroy'])->name('destroy');
+});
+
+Route::prefix('peminjaman')->name('peminjaman.')->group(function () {
+    Route::get('', [PeminjamanController::class, 'index'])->name('index');
+    Route::get('tambah', [PeminjamanController::class, 'create'])->name('create');
+    Route::post('', [PeminjamanController::class, 'store'])->name('store');
+    Route::get('edit/{peminjaman}', [PeminjamanController::class, 'edit'])->name('edit');
+    Route::put('{peminjaman}', [PeminjamanController::class, 'update'])->name('update');
+    Route::delete('{peminjaman}', [PeminjamanController::class, 'destroy'])->name('destroy');
 });

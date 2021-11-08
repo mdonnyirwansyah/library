@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAnggotasTable extends Migration
+class CreatePeminjamenTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,9 @@ class CreateAnggotasTable extends Migration
      */
     public function up()
     {
-        Schema::create('anggota', function (Blueprint $table) {
+        Schema::create('peminjaman', function (Blueprint $table) {
             $table->id();
-            $table->string('nis');
-            $table->string('nama');
-            $table->foreignId('kelas_id')->constrained('kelas', 'id')->onUpdate('cascade')->onDelete('cascade');
-            $table->string('slug');
+            $table->foreignId('anggota_id')->constrained('anggota', 'id')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -30,6 +27,6 @@ class CreateAnggotasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('anggota');
+        Schema::dropIfExists('peminjaman');
     }
 }

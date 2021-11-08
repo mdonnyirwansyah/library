@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Edit Anggota')
+@section('title', 'Edit Peminjaman')
 
 @push('javascript')
 <script>
@@ -20,7 +20,7 @@
     $(document).ready( function() {
         $('.select2').select2({
             theme: 'bootstrap4',
-            placeholder: 'Pilih kelas',
+            placeholder: 'Pilih Buku',
         });
 
         $('#form-action').submit(function (e) {
@@ -43,7 +43,7 @@
 
                         async function redirect() {
                         let promise = new Promise(function(resolve, reject) {
-                            setTimeout(function() { resolve('{{ route("anggota.index") }}'); }, 3000);
+                            setTimeout(function() { resolve('{{ route("peminjaman.index") }}'); }, 3000);
                         });
                         window.location.href = await promise;
                         }
@@ -66,19 +66,19 @@
 <section class="section">
     <div class="section-header">
         <div class="section-header-back">
-            <a href="{{ route('anggota.index') }}" class="btn btn-icon">
+            <a href="{{ route('peminjaman.index') }}" class="btn btn-icon">
                 <i class="fas fa-arrow-left"></i>
             </a>
         </div>
-        <h1>Edit Anggota</h1>
+        <h1>Edit Peminjaman</h1>
         <div class="section-header-breadcrumb">
             <div class="breadcrumb-item active">
                 <a href="{{ route('dashboard') }}">Dashboard</a>
             </div>
             <div class="breadcrumb-item">
-                <a href="{{ route('anggota.index') }}">Anggota</a>
+                <a href="{{ route('peminjaman.index') }}">Peminjaman</a>
             </div>
-            <div class="breadcrumb-item">Edit Anggota</div>
+            <div class="breadcrumb-item">Edit Peminjaman</div>
         </div>
     </div>
 
@@ -87,9 +87,9 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('anggota.update', $anggota) }}" id="form-action" enctype="multipart/form-data">
+                        <form action="{{ route('peminjaman.update', $peminjaman) }}" id="form-action" enctype="multipart/form-data">
                             @method('PUT')
-                            @include('app.anggota.partials.form')
+                            @include('app.peminjaman.partials.form')
                         </form>
                     </div>
                 </div>
