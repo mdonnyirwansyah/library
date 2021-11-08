@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AnggotaController;
+use App\Http\Controllers\BukuController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\KelasController;
@@ -44,4 +45,13 @@ Route::prefix('kategori')->name('kategori.')->group(function () {
     Route::get('edit/{kategori:slug}', [KategoriController::class, 'edit'])->name('edit');
     Route::put('{kategori:slug}', [KategoriController::class, 'update'])->name('update');
     Route::delete('{kategori:slug}', [KategoriController::class, 'destroy'])->name('destroy');
+});
+
+Route::prefix('buku')->name('buku.')->group(function () {
+    Route::get('', [BukuController::class, 'index'])->name('index');
+    Route::get('tambah', [BukuController::class, 'create'])->name('create');
+    Route::post('', [BukuController::class, 'store'])->name('store');
+    Route::get('edit/{buku:slug}', [BukuController::class, 'edit'])->name('edit');
+    Route::put('{buku:slug}', [BukuController::class, 'update'])->name('update');
+    Route::delete('{buku:slug}', [BukuController::class, 'destroy'])->name('destroy');
 });

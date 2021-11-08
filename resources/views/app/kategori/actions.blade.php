@@ -21,7 +21,7 @@
                     },
                 });
             } else {
-                swal('Data kamu tetap aman!');
+                swal('Data batal dihapus!');
             }
         });
     }

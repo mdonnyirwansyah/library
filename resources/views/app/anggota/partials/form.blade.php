@@ -23,7 +23,7 @@
         <option value="" selected>Pilih Kelas</option>
         @endisset
         @foreach ($kelas as $item)
-        <option value="{{ $item->id }}" @isset($anggota) @if ($anggota->examintion_id == $item->id) selected @endif @endisset>{{ $item->nama }}</option>
+        <option value="{{ $item->id }}" @isset($anggota) @if ($anggota->kelas_id == $item->id) selected @endif @endisset>{{ $item->nama }}</option>
         @endforeach
       </select>
       <small class="invalid-feedback kelas_id_err"></small>

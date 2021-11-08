@@ -2,85 +2,93 @@
 
 namespace App\Http\Controllers;
 
-use App\DataTables\KategoriDataTable;
+use App\DataTables\BukuDataTable;
 use App\Models\Buku;
+use App\Models\Kategori;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class BukuController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(KategoriDataTable $dataTable)
+    public function index(BukuDataTable $dataTable)
     {
-        return $dataTable->render('app.kategori.index');
+        return $dataTable->render('app.buku.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        $kategori = Kategori::all();
+
+        return view('app.buku.create', compact('kategori'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'kode' => 'required|unique:buku',
+            'judul' => 'required',
+            'kategori_id' => 'required',
+            'pengarang' => 'required',
+            'penerbit' => 'required',
+            'tahun' => 'required',
+        ]);
+
+        if ($validator->passes()) {
+            $buku = new Buku();
+            $buku->kode = $request->kode;
+            $buku->judul = $request->judul;
+            $buku->kategori_id = $request->kategori_id;
+            $buku->pengarang = $request->pengarang;
+            $buku->penerbit = $request->penerbit;
+            $buku->tahun = $request->tahun;
+            $buku->slug = Str::slug($request->judul);
+            $buku->save();
+
+            return response()->json(['success' => 'Data baru berhasil ditambah!']);
+        }
+
+        return response()->json(['error' => $validator->errors()]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Buku  $buku
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Buku $buku)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Buku  $buku
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Buku $buku)
     {
-        //
+        $kategori = Kategori::all();
+
+        return view('app.buku.edit', compact('buku', 'kategori'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Buku  $buku
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Buku $buku)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'kode' => 'required|unique:buku,kode,' .$buku->id,
+            'judul' => 'required',
+            'kategori_id' => 'required',
+            'pengarang' => 'required',
+            'penerbit' => 'required',
+            'tahun' => 'required',
+        ]);
+
+        if ($validator->passes()) {
+            $buku->kode = $request->kode;
+            $buku->judul = $request->judul;
+            $buku->kategori_id = $request->kategori_id;
+            $buku->pengarang = $request->pengarang;
+            $buku->penerbit = $request->penerbit;
+            $buku->tahun = $request->tahun;
+            $buku->slug = Str::slug($request->judul);
+            $buku->save();
+
+            return response()->json(['success' => 'Data berhasil diperbarui!']);
+        }
+
+        return response()->json(['error' => $validator->errors()]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Buku  $buku
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Buku $buku)
     {
-        //
+        $buku->delete();
+
+        return response()->json(['success' => 'Data berhasil dihapus!']);
     }
 }

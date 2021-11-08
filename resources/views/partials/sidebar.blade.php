@@ -29,5 +29,11 @@
         <i class="fas fa-tags"></i> <span>Kategori</span>
       </a>
     </li>
+
+    <li class="{{ request()->is('buku') ? 'active' : '' }}">
+      <a class="nav-link" href="{{ route('buku.index') }}">
+        <i class="fas fa-book"></i> <span>Buku</span>
+      </a>
+    </li>
   </ul>
 </aside>
