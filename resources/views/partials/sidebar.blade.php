@@ -41,5 +41,11 @@
         <i class="fas fa-upload"></i> <span>Peminjaman</span>
       </a>
     </li>
+
+    <li class="{{ request()->is('pengembalian') ? 'active' : '' }}">
+      <a class="nav-link" href="{{ route('pengembalian.index') }}">
+        <i class="fas fa-download"></i> <span>Pengembalian</span>
+      </a>
+    </li>
   </ul>
 </aside>

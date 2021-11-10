@@ -1,51 +1,56 @@
 @extends('layouts.app')
 
-@section('title', 'Edit Peminjaman')
+@section('title', 'Tambah Pengembalian')
 
 @push('javascript')
 <script>
     function printErrorMsg (msg) {
         $.each( msg, function ( key, value ) {
             $('#'+key).addClass('is-invalid');
-            $('#thumbnail-input').addClass('is-invalid');
             $('.'+key+'_err').text(value);
             $('#'+key).change(function () {
                 $('#'+key).removeClass('is-invalid');
-                $('#thumbnail-input').removeClass('is-invalid');
                 $('#'+key).addClass('is-valid');
-            } );
+            });
+        });
+    }
+
+    function show(id) {
+        $.get('http://127.0.0.1:8000/peminjaman/show/'+id, function (response) {
+            $('#view-form-buku').html(response.success).show();
         });
     }
 
     $(document).ready( function() {
         $('.select2').select2({
             theme: 'bootstrap4',
-            placeholder: 'Pilih Buku',
+            placeholder: 'Pilih buku',
         });
 
 
-        $('#nis').change(function (e) {
-            let nis = $('#nis').val();
+        $('#peminjaman_id').change(function (e) {
+            let peminjaman_id = $('#peminjaman_id').val();
 
             $.ajax({
-                url: "{{ route('anggota.find') }}",
+                url: "{{ route('peminjaman.find') }}",
                 type: "POST",
                 data: {
-                    nis
+                    peminjaman_id
                 },
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function (response) {
                     if(response.success){
-                        $('#nis').removeClass('is-invalid');
-                        $('#nis').addClass('is-valid');
-                        $('.nis_valid').text('Nama Anggota: ' + response.success);
+                        $('#peminjaman_id').removeClass('is-invalid');
+                        $('#peminjaman_id').addClass('is-valid');
+                        $('.peminjaman_id_valid').text('Nama Peminjam: ' + response.success);
                         $('#btn').attr('disabled', false);
+                        show(response.id);
                     }else{
-                        $('#nis').removeClass('is-valid');
-                        $('#nis').addClass('is-invalid');
-                        $('.nis_err').text(response.error);
+                        $('#peminjaman_id').removeClass('is-valid');
+                        $('#peminjaman_id').addClass('is-invalid');
+                        $('.peminjaman_id_err').text(response.error);
                         $('#btn').attr('disabled', true);
                     }
                 },
@@ -75,7 +80,7 @@
 
                         async function redirect() {
                         let promise = new Promise(function(resolve, reject) {
-                            setTimeout(function() { resolve('{{ route("peminjaman.index") }}'); }, 3000);
+                            setTimeout(function() { resolve('{{ route("pengembalian.index") }}'); }, 3000);
                         });
                         window.location.href = await promise;
                         }
@@ -83,6 +88,7 @@
                         redirect();
                     }else{
                         printErrorMsg(response.error);
+                        $('#btn').attr('disabled', false);
                     }
                 },
                 error: function(xhr, ajaxOptions, thrownError) {
@@ -98,19 +104,19 @@
 <section class="section">
     <div class="section-header">
         <div class="section-header-back">
-            <a href="{{ route('peminjaman.index') }}" class="btn btn-icon">
+            <a href="{{ route('pengembalian.index') }}" class="btn btn-icon">
                 <i class="fas fa-arrow-left"></i>
             </a>
         </div>
-        <h1>Edit Peminjaman</h1>
+        <h1>Tambah Pengembalian</h1>
         <div class="section-header-breadcrumb">
             <div class="breadcrumb-item active">
                 <a href="{{ route('dashboard') }}">Dashboard</a>
             </div>
             <div class="breadcrumb-item">
-                <a href="{{ route('peminjaman.index') }}">Peminjaman</a>
+                <a href="{{ route('pengembalian.index') }}">Pengembalian</a>
             </div>
-            <div class="breadcrumb-item">Edit Peminjaman</div>
+            <div class="breadcrumb-item">Tambah Pengembalian</div>
         </div>
     </div>
 
@@ -119,9 +125,8 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('peminjaman.update', $peminjaman) }}" id="form-action" enctype="multipart/form-data">
-                            @method('PUT')
-                            @include('app.peminjaman.partials.form')
+                        <form action="{{ route('pengembalian.store') }}" id="form-action" enctype="multipart/form-data">
+                            @include('app.pengembalian.partials.form')
                         </form>
                     </div>
                 </div>

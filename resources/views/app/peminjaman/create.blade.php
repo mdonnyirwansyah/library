@@ -26,7 +26,7 @@
             let nis = $('#nis').val();
 
             $.ajax({
-                url: "{{ route('anggota.search') }}",
+                url: "{{ route('anggota.find') }}",
                 type: "POST",
                 data: {
                     nis

@@ -2,46 +2,43 @@
 
 namespace App\Http\Controllers;
 
-use App\DataTables\PeminjamanDataTable;
-use App\Models\Anggota;
+use App\DataTables\PengembalianDataTable;
 use App\Models\Buku;
 use App\Models\Peminjaman;
+use App\Models\Pengembalian;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
-class PeminjamanController extends Controller
+class PengembalianController extends Controller
 {
-    public function index(PeminjamanDataTable $dataTable)
+    public function index(PengembalianDataTable $dataTable)
     {
-        return $dataTable->render('app.peminjaman.index');
+        return $dataTable->render('app.pengembalian.index');
     }
 
     public function create()
     {
-        $buku = Buku::all();
-
-        return view('app.peminjaman.create', compact('buku'));
+        return view('app.pengembalian.create');
     }
 
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'nis' => 'required',
-            'buku' => 'required',
+            'peminjaman_id' => 'required|unique:pengembalian',
         ]);
 
         if ($validator->passes()) {
-            $anggota = Anggota::where('nis', $request->nis)->first();
+            $pengembalian = Peminjaman::find($request->peminjaman_id);
             $buku = collect($request->input('buku', []))->map(function ($item) {
                 return ['buku_id' => $item, 'jumlah' => 1];
             });
-            DB::transaction(function() use ($anggota, $buku) {
-                $peminjaman = new Peminjaman();
-                $peminjaman->anggota_id = $anggota->id;
-                $peminjaman->save();
-                if ($peminjaman) {
-                    $peminjaman->buku()->sync($buku);
+            DB::transaction(function() use ($pengembalian, $buku) {
+                $pengembalian = new Pengembalian();
+                $pengembalian->peminjaman_id = $pengembalian->id;
+                $pengembalian->save();
+                if ($pengembalian) {
+                    $pengembalian->buku()->sync($buku);
                     foreach ($buku as $item) {
                         $bukuDipinjam = Buku::find($item['buku_id']);
                         $bukuDipinjam->stok = $bukuDipinjam->stok - $item['jumlah'];
@@ -56,53 +53,33 @@ class PeminjamanController extends Controller
         return response()->json(['error' => $validator->errors()]);
     }
 
-    public function find(Request $request)
+    public function edit(Pengembalian $pengembalian)
     {
-        $peminjaman = Peminjaman::find($request->peminjaman_id);
-
-        if ($peminjaman) {
-            return response()->json(['success' => $peminjaman->anggota->nama, 'id' => $peminjaman->id]);
-        }
-
-        return response()->json(['error' => 'ID Peminjaman tidak ditemukan!']);
+        return view('app.pengembalian.edit', compact('Pengembalian'));
     }
 
-    public function show(Peminjaman $peminjaman)
-    {
-        return response()->json(['success' => view('app.peminjaman.show', compact('peminjaman'))->render()]);
-    }
-
-    public function edit(Peminjaman $peminjaman)
-    {
-        $buku = Buku::all();
-
-        return view('app.peminjaman.edit', compact('peminjaman', 'buku'));
-    }
-
-    public function update(Request $request, Peminjaman $peminjaman)
+    public function update(Request $request, Peminjaman $pengembalian)
     {
         $validator = Validator::make($request->all(), [
-            'nis' => 'required',
-            'buku' => 'required',
+            'peminjaman_id' => 'required',
         ]);
 
         if ($validator->passes()) {
-            $anggota = Anggota::where('nis', $request->nis)->first();
             $buku = collect($request->input('buku', []))->map(function ($item) {
                 return ['buku_id' => $item, 'jumlah' => 1];
             });
 
-            DB::transaction(function() use ($anggota, $buku, $peminjaman) {
-                foreach ($peminjaman->buku as $item) {
+            DB::transaction(function() use ($buku, $pengembalian) {
+                foreach ($pengembalian->buku as $item) {
                     $bukuDikembalikan = Buku::find($item->id);
                     $bukuDikembalikan->stok = $bukuDikembalikan->stok + $item->pivot->jumlah;
                     $bukuDikembalikan->save();
                 }
 
-                $peminjaman->anggota_id = $anggota->id;
-                $peminjaman->save();
+                $pengembalian->peminjaman_id = $pengembalian->id;
+                $pengembalian->save();
 
-                $peminjaman->buku()->sync($buku);
+                $pengembalian->buku()->sync($buku);
                 foreach ($buku as $item) {
                     $bukuDipinjam = Buku::find($item['buku_id']);
                     $bukuDipinjam->stok = $bukuDipinjam->stok - $item['jumlah'];
@@ -115,15 +92,15 @@ class PeminjamanController extends Controller
         return response()->json(['error' => $validator->errors()]);
     }
 
-    public function destroy(Peminjaman $peminjaman)
+    public function destroy(Pengembalian $pengembalian)
     {
-        DB::transaction(function() use ($peminjaman) {
-            foreach ($peminjaman->buku as $item) {
+        DB::transaction(function() use ($pengembalian) {
+            foreach ($pengembalian->buku as $item) {
                 $bukuDikembalikan = Buku::find($item->id);
                 $bukuDikembalikan->stok = $bukuDikembalikan->stok + $item->pivot->jumlah;
                 $bukuDikembalikan->save();
             }
-            $peminjaman->delete();
+            $pengembalian->delete();
         });
         return response()->json(['success' => 'Data berhasil dihapus!']);
     }

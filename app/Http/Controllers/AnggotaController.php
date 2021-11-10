@@ -45,7 +45,7 @@ class AnggotaController extends Controller
         return response()->json(['error' => $validator->errors()]);
     }
 
-    public function search(Request $request)
+    public function find(Request $request)
     {
         $anggota = Anggota::where('nis', $request->nis)->first();
 

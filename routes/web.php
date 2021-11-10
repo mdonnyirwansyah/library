@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\PeminjamanController;
+use App\Http\Controllers\PengembalianController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,7 +35,7 @@ Route::prefix('anggota')->name('anggota.')->group(function () {
     Route::get('', [AnggotaController::class, 'index'])->name('index');
     Route::get('tambah', [AnggotaController::class, 'create'])->name('create');
     Route::post('', [AnggotaController::class, 'store'])->name('store');
-    Route::post('search', [AnggotaController::class, 'search'])->name('search');
+    Route::post('find', [AnggotaController::class, 'find'])->name('find');
     Route::get('edit/{anggota:slug}', [AnggotaController::class, 'edit'])->name('edit');
     Route::put('{anggota:slug}', [AnggotaController::class, 'update'])->name('update');
     Route::delete('{anggota:slug}', [AnggotaController::class, 'destroy'])->name('destroy');
@@ -62,7 +63,18 @@ Route::prefix('peminjaman')->name('peminjaman.')->group(function () {
     Route::get('', [PeminjamanController::class, 'index'])->name('index');
     Route::get('tambah', [PeminjamanController::class, 'create'])->name('create');
     Route::post('', [PeminjamanController::class, 'store'])->name('store');
+    Route::post('find', [PeminjamanController::class, 'find'])->name('find');
+    Route::get('show/{peminjaman}', [PeminjamanController::class, 'show'])->name('show');
     Route::get('edit/{peminjaman}', [PeminjamanController::class, 'edit'])->name('edit');
     Route::put('{peminjaman}', [PeminjamanController::class, 'update'])->name('update');
     Route::delete('{peminjaman}', [PeminjamanController::class, 'destroy'])->name('destroy');
+});
+
+Route::prefix('pengembalian')->name('pengembalian.')->group(function () {
+    Route::get('', [PengembalianController::class, 'index'])->name('index');
+    Route::get('tambah', [PengembalianController::class, 'create'])->name('create');
+    Route::post('', [PengembalianController::class, 'store'])->name('store');
+    Route::get('edit/{pengembalian}', [PengembalianController::class, 'edit'])->name('edit');
+    Route::put('{pengembalian}', [PengembalianController::class, 'update'])->name('update');
+    Route::delete('{pengembalian}', [PengembalianController::class, 'destroy'])->name('destroy');
 });
