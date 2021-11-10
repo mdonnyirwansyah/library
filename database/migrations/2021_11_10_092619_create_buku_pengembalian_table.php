@@ -18,7 +18,6 @@ class CreateBukuPengembalianTable extends Migration
             $table->foreignId('buku_id')->constrained('buku', 'id')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('pengembalian_id')->constrained('pengembalian', 'id')->onUpdate('cascade')->onDelete('cascade');
             $table->enum('status', [1, 0]);
-            $table->timestamps();
         });
     }
 

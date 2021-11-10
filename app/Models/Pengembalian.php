@@ -15,7 +15,7 @@ class Pengembalian extends Model
 
     public function peminjaman()
     {
-        return $this->hasOne(Peminjaman::class);
+        return $this->belongsTo(Peminjaman::class);
     }
 
     public function buku()

@@ -22,4 +22,9 @@ class Peminjaman extends Model
     {
         return $this->belongsToMany(Buku::class)->withPivot(['jumlah']);
     }
+
+    public function pengembalian()
+    {
+        return $this->hasOne(Pengembalian::class);
+    }
 }

@@ -24,26 +24,24 @@ class PengembalianController extends Controller
 
     public function store(Request $request)
     {
+        $req = $request->all();
+        $data_buku = $req['pengembalian'];
+
         $validator = Validator::make($request->all(), [
             'peminjaman_id' => 'required|unique:pengembalian',
         ]);
 
         if ($validator->passes()) {
-            $pengembalian = Peminjaman::find($request->peminjaman_id);
-            $buku = collect($request->input('buku', []))->map(function ($item) {
-                return ['buku_id' => $item, 'jumlah' => 1];
+            $buku = collect($data_buku['buku'])->map(function ($item) {
+                return ['buku_id' => $item['id'], 'status' => $item['status']];
             });
-            DB::transaction(function() use ($pengembalian, $buku) {
+
+            DB::transaction(function() use ($request, $buku) {
                 $pengembalian = new Pengembalian();
-                $pengembalian->peminjaman_id = $pengembalian->id;
+                $pengembalian->peminjaman_id = $request->peminjaman_id;
                 $pengembalian->save();
                 if ($pengembalian) {
                     $pengembalian->buku()->sync($buku);
-                    foreach ($buku as $item) {
-                        $bukuDipinjam = Buku::find($item['buku_id']);
-                        $bukuDipinjam->stok = $bukuDipinjam->stok - $item['jumlah'];
-                        $bukuDipinjam->save();
-                    }
                 }
             });
 
