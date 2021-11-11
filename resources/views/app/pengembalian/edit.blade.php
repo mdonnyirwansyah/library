@@ -18,42 +18,6 @@
     }
 
     $(document).ready( function() {
-        $('.select2').select2({
-            theme: 'bootstrap4',
-            placeholder: 'Pilih Buku',
-        });
-
-        $('#peminjaman_id').change(function (e) {
-            let peminjaman_id = $('#peminjaman_id').val();
-
-            $.ajax({
-                url: "{{ route('peminjaman.find') }}",
-                type: "POST",
-                data: {
-                    peminjaman_id
-                },
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                success: function (response) {
-                    if(response.success){
-                        $('#peminjaman_id').removeClass('is-invalid');
-                        $('#peminjaman_id').addClass('is-valid');
-                        $('.peminjaman_id_valid').text('Nama Peminjam: ' + response.success);
-                        $('#btn').attr('disabled', false);
-                    }else{
-                        $('#peminjaman_id').removeClass('is-valid');
-                        $('#peminjaman_id').addClass('is-invalid');
-                        $('.peminjaman_id_err').text(response.error);
-                        $('#btn').attr('disabled', true);
-                    }
-                },
-                error: function(xhr, ajaxOptions, thrownError) {
-                    alert(xhr.status + '\n' + xhr.responseText + '\n' + thrownError);
-                }
-            });
-        });
-
         $('#form-action').submit(function (e) {
             e.preventDefault();
             $('#btn').attr('disabled', true);
@@ -103,7 +67,7 @@
         </div>
         <h1>Edit Pengembalian</h1>
         <div class="section-header-breadcrumb">
-            <div class="breadcrumb-item active">
+            <div class="breadcrumb-item active" >
                 <a href="{{ route('dashboard') }}">Dashboard</a>
             </div>
             <div class="breadcrumb-item">

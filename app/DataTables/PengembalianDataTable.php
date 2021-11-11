@@ -19,8 +19,41 @@ class PengembalianDataTable extends DataTable
         return datatables()
             ->eloquent($query)
             ->addIndexColumn()
+            ->addColumn('nis', function ($data) {
+                return $data->peminjaman->anggota->nis;
+            })
             ->addColumn('anggota', function ($data) {
                 return $data->peminjaman->anggota->nama;
+            })
+            ->addColumn('sudah', function ($data) {
+                $filter = $data->buku->filter(function ($item) {
+                    return $item->pivot->status == 1;
+                });
+
+                $map = $filter->map(function ($item) {
+                    return ['judul' => $item->judul.' '.$item->kategori->nama];
+                });
+
+                if (count($map) > 0) {
+                    return $map->implode('judul', ', ');
+                } else {
+                    return '-';
+                }
+            })
+            ->addColumn('belum', function ($data) {
+                $filter = $data->buku->filter(function ($item) {
+                    return $item->pivot->status == 0;
+                });
+
+                $map = $filter->map(function ($item) {
+                    return ['judul' => $item->judul.' '.$item->kategori->nama];
+                });
+
+                if (count($map) > 0) {
+                    return $map->implode('judul', ', ');
+                } else {
+                    return '-';
+                }
             })
             ->addColumn('action', function ($data) {
                 return '
@@ -33,7 +66,7 @@ class PengembalianDataTable extends DataTable
                 ';
             })
             ->editColumn('created_at', function ($data) {
-                return $data->created_at->format('Y-m-d H:i:s');
+                return $data->created_at->format('Y-m-d');
             })
             ->rawColumns(['action']);
     }
@@ -74,7 +107,10 @@ class PengembalianDataTable extends DataTable
             Column::make('DT_RowIndex')->searchable(false)->title('No')->width(50),
             Column::make('created_at')->title('Tanggal'),
             Column::make('id')->title('ID'),
+            Column::computed('nis')->title('NIS'),
             Column::computed('anggota')->title('Nama'),
+            Column::computed('sudah'),
+            Column::computed('belum'),
             Column::computed('action')->title('Aksi')->width(85),
         ];
     }

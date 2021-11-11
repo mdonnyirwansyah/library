@@ -19,11 +19,18 @@ class PeminjamanDataTable extends DataTable
         return datatables()
             ->eloquent($query)
             ->addIndexColumn()
+            ->addColumn('nis', function ($data) {
+                return $data->anggota->nis;
+            })
             ->addColumn('anggota', function ($data) {
                 return $data->anggota->nama;
             })
             ->addColumn('buku', function ($data) {
-                return $data->buku()->get()->implode('judul', ', ');
+                $map = $data->buku->map(function ($item) {
+                    return ['judul' => $item->judul.' '.$item->kategori->nama];
+                });
+
+                return $map->implode('judul', ', ');
             })
             ->addColumn('action', function ($data) {
                 return '
@@ -36,7 +43,7 @@ class PeminjamanDataTable extends DataTable
                 ';
             })
             ->editColumn('created_at', function ($data) {
-                return $data->created_at->format('Y-m-d H:i:s');
+                return $data->created_at->format('Y-m-d');
             })
             ->rawColumns(['action']);
     }
@@ -77,6 +84,7 @@ class PeminjamanDataTable extends DataTable
             Column::make('DT_RowIndex')->searchable(false)->title('No')->width(50),
             Column::make('created_at')->title('Tanggal'),
             Column::make('id')->title('ID'),
+            Column::computed('nis')->title('NIS'),
             Column::computed('anggota')->title('Nama'),
             Column::computed('buku'),
             Column::computed('action')->title('Aksi')->width(85),

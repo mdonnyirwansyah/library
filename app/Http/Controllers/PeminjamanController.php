@@ -33,18 +33,18 @@ class PeminjamanController extends Controller
 
         if ($validator->passes()) {
             $anggota = Anggota::where('nis', $request->nis)->first();
-            $buku = collect($request->input('buku', []))->map(function ($item) {
-                return ['buku_id' => $item, 'jumlah' => 1];
-            });
-            DB::transaction(function() use ($anggota, $buku) {
+
+            DB::transaction(function() use ($anggota, $request) {
                 $peminjaman = new Peminjaman();
                 $peminjaman->anggota_id = $anggota->id;
                 $peminjaman->save();
+
                 if ($peminjaman) {
-                    $peminjaman->buku()->sync($buku);
-                    foreach ($buku as $item) {
-                        $bukuDipinjam = Buku::find($item['buku_id']);
-                        $bukuDipinjam->stok = $bukuDipinjam->stok - $item['jumlah'];
+                    $peminjaman->buku()->sync($request->buku);
+
+                    foreach ($request->buku as $item) {
+                        $bukuDipinjam = Buku::find($item);
+                        $bukuDipinjam->stok = $bukuDipinjam->stok - 1;
                         $bukuDipinjam->save();
                     }
                 }
@@ -88,11 +88,8 @@ class PeminjamanController extends Controller
 
         if ($validator->passes()) {
             $anggota = Anggota::where('nis', $request->nis)->first();
-            $buku = collect($request->input('buku', []))->map(function ($item) {
-                return ['buku_id' => $item, 'jumlah' => 1];
-            });
 
-            DB::transaction(function() use ($anggota, $buku, $peminjaman) {
+            DB::transaction(function() use ($anggota, $request, $peminjaman) {
                 foreach ($peminjaman->buku as $item) {
                     $bukuDikembalikan = Buku::find($item->id);
                     $bukuDikembalikan->stok = $bukuDikembalikan->stok + $item->pivot->jumlah;
@@ -102,10 +99,10 @@ class PeminjamanController extends Controller
                 $peminjaman->anggota_id = $anggota->id;
                 $peminjaman->save();
 
-                $peminjaman->buku()->sync($buku);
-                foreach ($buku as $item) {
-                    $bukuDipinjam = Buku::find($item['buku_id']);
-                    $bukuDipinjam->stok = $bukuDipinjam->stok - $item['jumlah'];
+                $peminjaman->buku()->sync($request->buku);
+                foreach ($request->buku as $item) {
+                    $bukuDipinjam = Buku::find($item);
+                    $bukuDipinjam->stok = $bukuDipinjam->stok - 1;
                     $bukuDipinjam->save();
                 }
             });
@@ -125,6 +122,7 @@ class PeminjamanController extends Controller
             }
             $peminjaman->delete();
         });
+
         return response()->json(['success' => 'Data berhasil dihapus!']);
     }
 }
