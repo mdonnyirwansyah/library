@@ -15,8 +15,8 @@
         });
     }
 
-    function show(id) {
-        $.get('http://127.0.0.1:8000/peminjaman/show/'+id, function (response) {
+    function show(route) {
+        $.get(route, function (response) {
             $('#view-form-buku').html(response.success).show();
         });
     }
@@ -40,7 +40,7 @@
                         $('#peminjaman_id').addClass('is-valid');
                         $('.peminjaman_id_valid').text('Nama Peminjam: ' + response.success);
                         $('#btn').attr('disabled', false);
-                        show(response.id);
+                        show(response.route);
                     }else{
                         $('#peminjaman_id').removeClass('is-valid');
                         $('#peminjaman_id').addClass('is-invalid');

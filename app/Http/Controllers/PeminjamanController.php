@@ -60,8 +60,10 @@ class PeminjamanController extends Controller
     {
         $peminjaman = Peminjaman::find($request->peminjaman_id);
 
+        $route = route('peminjaman.show', $peminjaman->id);
+
         if ($peminjaman) {
-            return response()->json(['success' => $peminjaman->anggota->nama, 'id' => $peminjaman->id]);
+            return response()->json(['success' => $peminjaman->anggota->nama, 'route' => $route]);
         }
 
         return response()->json(['error' => 'ID Peminjaman tidak ditemukan!']);

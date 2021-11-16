@@ -20,12 +20,7 @@
                 @enderror
             </div>
             <div class="form-group">
-                <div class="d-block">
-                    <label for="password" class="control-label">{{ __('Password') }}</label>
-                    <div class="float-right">
-                        <a href="{{ route('password.email') }}" class="text-small">{{ __('Forgot Password') }}?</a>
-                    </div>
-                </div>
+                <label for="password" class="control-label">{{ __('Password') }}</label>
                 <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password">
                 @error('password')
                     <span class="invalid-feedback" role="alert">

@@ -57,5 +57,11 @@
         <li class="dropdown {{ request()->is('laporan/pengembalian') ? 'active' : '' }}"><a class="nav-link" href="{{ route('laporan.pengembalian') }}">Pengembalian</a></li>
       </ul>
     </li>
+
+    <li class="{{ request()->is('users') ? 'active' : '' }}">
+      <a class="nav-link" href="{{ route('users.index') }}">
+        <i class="fas fa-users"></i> <span>Users</span>
+      </a>
+    </li>
   </ul>
 </aside>

@@ -11,22 +11,22 @@
   <li class="dropdown">
     <a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg nav-link-user d-flex">
       <i class="fas fa-user-circle"></i>
-      <div class="d-sm-none d-lg-inline-block ml-1">Jhon</div>
+      <div class="d-sm-none d-lg-inline-block ml-1">{{ Auth::user()->name }}</div>
     </a>
     <div class="dropdown-menu dropdown-menu-right">
-      <div class="dropdown-title">Welcome, Jhon</div>
-      <a href="#" class="dropdown-item has-icon">
-        <i class="far fa-user"></i> Profile Information
+      <div class="dropdown-title">Selamat Datang, {{ Auth::user()->name }}</div>
+      <a href="{{ route('user-profile-information') }}" class="dropdown-item has-icon">
+        <i class="far fa-user"></i> Informasi Profil
       </a>
-      <a href="#" class="dropdown-item has-icon">
+      <a href="{{ route('user-password') }}" class="dropdown-item has-icon">
         <i class="fas fa-lock"></i> Update Password
       </a>
       <div class="dropdown-divider"></div>
-      <a class="dropdown-item has-icon text-danger" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+      <a class="dropdown-item has-icon text-danger" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
         <i class="fas fa-sign-out-alt"></i>
         Logout
       </a>
-      <form id="logout-form" action="#" method="POST" class="d-none">
+      <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
         @csrf
       </form>
     </div>
