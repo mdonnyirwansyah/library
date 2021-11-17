@@ -2,14 +2,19 @@
 
 namespace App\Models;
 
+use App\Models\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Pengembalian extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuid;
 
     protected $table = 'pengembalian';
+
+    protected $keyType = 'string';
+
+    public $incrementing = false;
 
     protected $guarded = [];
 

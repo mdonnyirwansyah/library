@@ -16,8 +16,10 @@ class CreateBukuPengembalianTable extends Migration
         Schema::create('buku_pengembalian', function (Blueprint $table) {
             $table->id();
             $table->foreignId('buku_id')->constrained('buku', 'id')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('pengembalian_id')->constrained('pengembalian', 'id')->onUpdate('cascade')->onDelete('cascade');
+            $table->uuid('pengembalian_id')->nullable(false);
             $table->enum('status', [1, 0]);
+
+            $table->foreign('pengembalian_id')->references('id')->on('pengembalian')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

@@ -14,7 +14,7 @@ class CreatePeminjamenTable extends Migration
     public function up()
     {
         Schema::create('peminjaman', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->foreignId('anggota_id')->constrained('anggota', 'id')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });

@@ -5,7 +5,7 @@ namespace App\DataTables;
 use App\Models\Peminjaman;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
-
+use Illuminate\Support\Str;
 class PeminjamanDataTable extends DataTable
 {
     /**
@@ -33,11 +33,13 @@ class PeminjamanDataTable extends DataTable
                 return $map->implode('judul', ', ');
             })
             ->addColumn('action', function ($data) {
+                $id = strtotime($data->created_at);
+
                 return '
                     <a data-toggle="tooltip" data-placement="top" title="Edit" href="'.route('peminjaman.edit', $data).'" class="btn btn-icon">
                         <i class="fas fa-pen text-info"></i>
                     </a>
-                    <button data-toggle="tooltip" data-placement="top" title="Hapus" onClick="deleteRecord('.$data->id.')" id="delete-'.$data->id.'" delete-route="'.route('peminjaman.destroy', $data).'" class="btn btn-icon">
+                    <button data-toggle="tooltip" data-placement="top" title="Hapus" onClick="deleteRecord('.$id.')" id="delete-'.$id.'" delete-route="'.route('peminjaman.destroy', $data).'" class="btn btn-icon">
                         <i class="fas fa-trash text-danger"></i>
                     </button>
                 ';
@@ -70,7 +72,7 @@ class PeminjamanDataTable extends DataTable
                     ->setTableId('peminjaman-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-                    ->orderBy([1, 'ASC']);
+                    ->orderBy([1, 'DESC']);
     }
 
     /**

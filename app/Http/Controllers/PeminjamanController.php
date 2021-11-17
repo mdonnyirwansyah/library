@@ -6,6 +6,7 @@ use App\DataTables\PeminjamanDataTable;
 use App\Models\Anggota;
 use App\Models\Buku;
 use App\Models\Peminjaman;
+use App\Models\Pengembalian;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -116,15 +117,19 @@ class PeminjamanController extends Controller
 
     public function destroy(Peminjaman $peminjaman)
     {
-        DB::transaction(function() use ($peminjaman) {
-            foreach ($peminjaman->buku as $item) {
-                $bukuDikembalikan = Buku::find($item->id);
-                $bukuDikembalikan->stok = $bukuDikembalikan->stok + $item->pivot->jumlah;
-                $bukuDikembalikan->save();
-            }
-            $peminjaman->delete();
-        });
+        if ($peminjaman->pengembalian) {
+            return response()->json(['failed' => 'Data gagal dihapus!, silahkan hapus data pengembalian dahulu']);
+        } else {
+            DB::transaction(function() use ($peminjaman) {
+                foreach ($peminjaman->buku as $item) {
+                    $bukuDikembalikan = Buku::find($item->id);
+                    $bukuDikembalikan->stok = $bukuDikembalikan->stok + $item->pivot->jumlah;
+                    $bukuDikembalikan->save();
+                }
+                $peminjaman->delete();
+            });
 
-        return response()->json(['success' => 'Data berhasil dihapus!']);
+            return response()->json(['success' => 'Data berhasil dihapus!']);
+        }
     }
 }

@@ -23,6 +23,10 @@
 
     $(document).ready( function() {
         $('#peminjaman_id').change(function (e) {
+            $('#btn').attr('disabled', true);
+        });
+
+        $('#peminjaman_id').change(function (e) {
             let peminjaman_id = $('#peminjaman_id').val();
 
             $.ajax({

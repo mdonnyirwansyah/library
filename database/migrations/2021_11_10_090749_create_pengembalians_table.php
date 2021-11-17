@@ -14,9 +14,11 @@ class CreatePengembaliansTable extends Migration
     public function up()
     {
         Schema::create('pengembalian', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('peminjaman_id')->constrained('peminjaman', 'id')->onUpdate('cascade')->onDelete('cascade');
+            $table->uuid('id')->primary();
+            $table->uuid('peminjaman_id')->nullable(false);
             $table->timestamps();
+
+            $table->foreign('peminjaman_id')->references('id')->on('peminjaman')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
