@@ -12,6 +12,12 @@
       </a>
     </li>
 
+    <li class="{{ request()->is('periode*') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('periode.index') }}">
+          <i class="fas fa-business-time"></i> <span>Periode</span>
+        </a>
+    </li>
+
     <li class="{{ request()->is('kelas*') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('kelas.index') }}">
           <i class="fas fa-school"></i> <span>Kelas</span>

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Kategori;
 use App\Models\Kelas;
+use App\Models\Peminjaman;
+use App\Models\Periode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
@@ -52,7 +54,49 @@ class LaporanController extends Controller
 
     public function peminjaman()
     {
-        return view('app.laporan.peminjaman');
+        $kelas = Kelas::all();
+        $periode = Periode::all();
+
+        return view('app.laporan.peminjaman', compact('kelas', 'periode'));
+    }
+
+    public function getPeminjamanData(Request $request)
+    {
+        if ($request->kelas_id || $request->periode_id) {
+            $peminjaman = Peminjaman::whereRelation(
+                'anggota', 'kelas_id', $request->kelas_id
+            )
+            ->where('periode_id', $request->periode_id)
+            ->get();
+        } else {
+            $peminjaman = Peminjaman::all();
+        }
+
+        return DataTables::of($peminjaman)
+        ->addIndexColumn()
+        ->addColumn('periode', function ($peminjaman) {
+            return $peminjaman->periode->nama;
+        })
+        ->addColumn('nis', function ($peminjaman) {
+            return $peminjaman->anggota->nis;
+        })
+        ->addColumn('anggota', function ($peminjaman) {
+            return $peminjaman->anggota->nama;
+        })
+        ->addColumn('kelas', function ($peminjaman) {
+            return $peminjaman->anggota->kelas->nama;
+        })
+        ->addColumn('buku', function ($peminjaman) {
+            $map = $peminjaman->buku->map(function ($item) {
+                return ['judul' => $item->judul.' '.$item->kategori->nama];
+            });
+
+            return $map->implode('judul', ', ');
+        })
+        ->editColumn('tanggal', function ($peminjaman) {
+            return $peminjaman->created_at->format('Y-m-d');
+        })
+        ->make(true);
     }
 
     public function pengembalian()

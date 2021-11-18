@@ -7,6 +7,22 @@
 </div>
 
 <div class="form-group row mb-4">
+    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3" for="periode">Periode</label>
+    <div class="col-sm-12 col-md-7">
+        <select class="form-select select2" style="width: 100%" name="periode" id="periode">
+            @isset($peminjaman)
+            @else
+            <option value="" selected>Pilih periode</option>
+            @endisset
+          @foreach ($periode as $item)
+          <option value="{{ $item->id }}" @isset($peminjaman) @if($item->id == $peminjaman->periode_id) selected @endif @endisset>{{ $item->nama }}</option>
+          @endforeach
+        </select>
+      <small class="invalid-feedback periode_err"></small>
+    </div>
+</div>
+
+<div class="form-group row mb-4">
     <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3" for="buku">Buku</label>
     <div class="col-sm-12 col-md-7">
         <select class="form-select select2" style="width: 100%" name="buku[]" id="buku" multiple>

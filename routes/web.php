@@ -8,6 +8,7 @@ use App\Http\Controllers\KelasController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\PengembalianController;
+use App\Http\Controllers\PeriodeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,6 +25,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/', DashboardController::class)->name('dashboard');
+
+    Route::prefix('periode')->name('periode.')->group(function () {
+        Route::get('', [PeriodeController::class, 'index'])->name('index');
+        Route::get('create', [PeriodeController::class, 'create'])->name('create');
+        Route::post('', [PeriodeController::class, 'store'])->name('store');
+        Route::get('edit/{periode:slug}', [PeriodeController::class, 'edit'])->name('edit');
+        Route::put('{periode:slug}', [PeriodeController::class, 'update'])->name('update');
+        Route::delete('{periode:slug}', [PeriodeController::class, 'destroy'])->name('destroy');
+    });
 
     Route::prefix('kelas')->name('kelas.')->group(function () {
         Route::get('', [KelasController::class, 'index'])->name('index');
@@ -87,6 +97,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('get-anggota', [LaporanController::class, 'getAnggotaData'])->name('get-anggota');
         Route::get('buku', [LaporanController::class, 'buku'])->name('buku');
         Route::post('get-buku', [LaporanController::class, 'getBukuData'])->name('get-buku');
+        Route::post('get-peminjaman', [LaporanController::class, 'getPeminjamanData'])->name('get-peminjaman');
         Route::get('peminjaman', [LaporanController::class, 'peminjaman'])->name('peminjaman');
         Route::get('pengembalian', [LaporanController::class, 'pengembalian'])->name('pengembalian');
     });

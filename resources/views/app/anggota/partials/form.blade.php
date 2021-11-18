@@ -20,7 +20,7 @@
       <select class="form-control select2" style="width: 100%" name="kelas_id" id="kelas_id">
         @isset($anggota)
         @else
-        <option value="" selected>Pilih Kelas</option>
+        <option value="" selected>Pilih kelas</option>
         @endisset
         @foreach ($kelas as $item)
         <option value="{{ $item->id }}" @isset($anggota) @if ($anggota->kelas_id == $item->id) selected @endif @endisset>{{ $item->nama }}</option>

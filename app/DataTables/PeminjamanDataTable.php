@@ -22,6 +22,9 @@ class PeminjamanDataTable extends DataTable
             ->addColumn('nis', function ($data) {
                 return $data->anggota->nis;
             })
+            ->addColumn('periode', function ($data) {
+                return $data->periode->nama;
+            })
             ->addColumn('anggota', function ($data) {
                 return $data->anggota->nama;
             })
@@ -84,6 +87,7 @@ class PeminjamanDataTable extends DataTable
     {
         return [
             Column::make('DT_RowIndex')->searchable(false)->title('No')->width(50),
+            Column::computed('periode')->title('Tahun Pelajaran'),
             Column::make('created_at')->title('Tanggal'),
             Column::make('id')->title('ID'),
             Column::computed('nis')->title('NIS'),

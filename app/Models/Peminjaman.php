@@ -23,6 +23,11 @@ class Peminjaman extends Model
         return $this->belongsTo(Anggota::class);
     }
 
+    public function periode()
+    {
+        return $this->belongsTo(Periode::class);
+    }
+
     public function buku()
     {
         return $this->belongsToMany(Buku::class)->withPivot(['jumlah']);
