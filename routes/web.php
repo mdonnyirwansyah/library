@@ -97,9 +97,10 @@ Route::middleware(['auth'])->group(function () {
         Route::post('get-anggota', [LaporanController::class, 'getAnggotaData'])->name('get-anggota');
         Route::get('buku', [LaporanController::class, 'buku'])->name('buku');
         Route::post('get-buku', [LaporanController::class, 'getBukuData'])->name('get-buku');
-        Route::post('get-peminjaman', [LaporanController::class, 'getPeminjamanData'])->name('get-peminjaman');
         Route::get('peminjaman', [LaporanController::class, 'peminjaman'])->name('peminjaman');
+        Route::post('get-peminjaman', [LaporanController::class, 'getPeminjamanData'])->name('get-peminjaman');
         Route::get('pengembalian', [LaporanController::class, 'pengembalian'])->name('pengembalian');
+        Route::post('get-pengembalian', [LaporanController::class, 'getPengembalianData'])->name('get-pengembalian');
     });
 
     Route::prefix('users')->name('users.')->group(function () {
