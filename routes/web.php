@@ -8,7 +8,7 @@ use App\Http\Controllers\KelasController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\PengembalianController;
-use App\Http\Controllers\PeriodeController;
+use App\Http\Controllers\TahunPelajaranController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,13 +26,13 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth'])->group(function () {
     Route::get('/', DashboardController::class)->name('dashboard');
 
-    Route::prefix('periode')->name('periode.')->group(function () {
-        Route::get('', [PeriodeController::class, 'index'])->name('index');
-        Route::get('create', [PeriodeController::class, 'create'])->name('create');
-        Route::post('', [PeriodeController::class, 'store'])->name('store');
-        Route::get('edit/{periode:slug}', [PeriodeController::class, 'edit'])->name('edit');
-        Route::put('{periode:slug}', [PeriodeController::class, 'update'])->name('update');
-        Route::delete('{periode:slug}', [PeriodeController::class, 'destroy'])->name('destroy');
+    Route::prefix('tahun-pelajaran')->name('tahun-pelajaran.')->group(function () {
+        Route::get('', [TahunPelajaranController::class, 'index'])->name('index');
+        Route::get('create', [TahunPelajaranController::class, 'create'])->name('create');
+        Route::post('', [TahunPelajaranController::class, 'store'])->name('store');
+        Route::get('edit/{tahun_pelajaran:slug}', [TahunPelajaranController::class, 'edit'])->name('edit');
+        Route::put('{tahun_pelajaran:slug}', [TahunPelajaranController::class, 'update'])->name('update');
+        Route::delete('{tahun_pelajaran:slug}', [TahunPelajaranController::class, 'destroy'])->name('destroy');
     });
 
     Route::prefix('kelas')->name('kelas.')->group(function () {

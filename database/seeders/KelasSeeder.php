@@ -23,7 +23,7 @@ class KelasSeeder extends Seeder
 
         $kelas->each( function ($item) {
             Kelas::create([
-                'nama' => $item,
+                'kelas' => $item,
                 'slug' => Str::slug($item)
             ]);
         });

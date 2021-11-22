@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\Periode;
+use App\Models\TahunPelajaran;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
-class PeriodeSeeder extends Seeder
+class TahunPelajaranSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,15 +15,15 @@ class PeriodeSeeder extends Seeder
      */
     public function run()
     {
-        $periode = collect([
+        $tahunPelajaran = collect([
             '2019/2020',
             '2020/2021',
             '2021/2022'
         ]);
 
-        $periode->each( function ($item) {
-            Periode::create([
-                'nama' => $item,
+        $tahunPelajaran->each( function ($item) {
+            TahunPelajaran::create([
+                'tahun' => $item,
                 'slug' => Str::slug($item)
             ]);
         });

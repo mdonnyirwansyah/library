@@ -7,18 +7,18 @@
 </div>
 
 <div class="form-group row mb-4">
-    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3" for="periode">Periode</label>
+    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3" for="tahun_pelajaran">Tahun Pelajaran</label>
     <div class="col-sm-12 col-md-7">
-        <select class="form-select select2" style="width: 100%" name="periode" id="periode">
+        <select class="form-select select2" style="width: 100%" name="tahun_pelajaran" id="tahun_pelajaran">
             @isset($peminjaman)
             @else
-            <option value="" selected>Pilih periode</option>
+            <option value="" selected>Pilih tahun pelajaran</option>
             @endisset
-          @foreach ($periode as $item)
-          <option value="{{ $item->id }}" @isset($peminjaman) @if($item->id == $peminjaman->periode_id) selected @endif @endisset>{{ $item->nama }}</option>
+          @foreach ($tahun_pelajaran as $item)
+          <option value="{{ $item->id }}" @isset($peminjaman) @if($item->id == $peminjaman->tahun_pelajaran_id) selected @endif @endisset>{{ $item->tahun }}</option>
           @endforeach
         </select>
-      <small class="invalid-feedback periode_err"></small>
+      <small class="invalid-feedback tahun_pelajaran_err"></small>
     </div>
 </div>
 

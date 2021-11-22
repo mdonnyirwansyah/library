@@ -37,6 +37,7 @@
                 },
                 {data: 'nis', name: 'nis'},
                 {data: 'nama', name: 'nama'},
+                {data: 'jenis_kelamin', name: 'jenis_kelamin'},
                 {data: 'kelas', name: 'kelas'},
             ]
         });
@@ -90,6 +91,7 @@
                         <th>No</th>
                         <th>NIS</th>
                         <th>Nama</th>
+                        <th>Jenis Kelamin</th>
                         <th>Kelas</th>
                     </tr>
                 </thead>

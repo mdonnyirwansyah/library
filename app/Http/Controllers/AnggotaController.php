@@ -28,14 +28,16 @@ class AnggotaController extends Controller
         $validator = Validator::make($request->all(), [
             'nis' => 'required|unique:anggota',
             'nama' => 'required',
-            'kelas_id' => 'required',
+            'jenis_kelamin' => 'required',
+            'kelas' => 'required',
         ]);
 
         if ($validator->passes()) {
             $anggota = new Anggota();
             $anggota->nis = $request->nis;
             $anggota->nama = $request->nama;
-            $anggota->kelas_id = $request->kelas_id;
+            $anggota->jenis_kelamin= $request->jenis_kelamin;
+            $anggota->kelas_id = $request->kelas;
             $anggota->slug = Str::slug($request->nama);
             $anggota->save();
 
@@ -68,13 +70,15 @@ class AnggotaController extends Controller
         $validator = Validator::make($request->all(), [
             'nis' => 'required|unique:anggota,nis,' .$anggota->id,
             'nama' => 'required',
-            'kelas_id' => 'required',
+            'jenis_kelamin' => 'required',
+            'kelas' => 'required',
         ]);
 
         if ($validator->passes()) {
             $anggota->nis = $request->nis;
             $anggota->nama = $request->nama;
-            $anggota->kelas_id = $request->kelas_id;
+            $anggota->jenis_kelamin = $request->jenis_kelamin;
+            $anggota->kelas_id = $request->kelas;
             $anggota->slug = Str::slug($request->nama);
             $anggota->save();
 

@@ -16,9 +16,9 @@
     }
 
     $(document).ready( function() {
-        $('#periode').select2({
+        $('#tahun_pelajaran').select2({
             theme: 'bootstrap4',
-            placeholder: 'Pilih periode',
+            placeholder: 'Pilih tahun pelajaran',
         });
 
         $('#buku').select2({

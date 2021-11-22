@@ -25,17 +25,19 @@ class PengembalianDataTable extends DataTable
             ->addColumn('anggota', function ($data) {
                 return $data->peminjaman->anggota->nama;
             })
+            ->addColumn('jenis_kelamin', function ($data) {
+                return $data->peminjaman->anggota->jenis_kelamin;
+            })
+            ->addColumn('kelas', function ($data) {
+                return $data->peminjaman->anggota->kelas->kelas;
+            })
             ->addColumn('sudah', function ($data) {
                 $filter = $data->buku->filter(function ($item) {
                     return $item->pivot->status == 1;
                 });
 
-                $map = $filter->map(function ($item) {
-                    return ['judul' => $item->judul.' '.$item->kategori->nama];
-                });
-
-                if (count($map) > 0) {
-                    return $map->implode('judul', ', ');
+                if (count($filter) > 0) {
+                    return $filter->implode('judul', ', ');
                 } else {
                     return '-';
                 }
@@ -45,12 +47,8 @@ class PengembalianDataTable extends DataTable
                     return $item->pivot->status == 0;
                 });
 
-                $map = $filter->map(function ($item) {
-                    return ['judul' => $item->judul.' '.$item->kategori->nama];
-                });
-
-                if (count($map) > 0) {
-                    return $map->implode('judul', ', ');
+                if (count($filter) > 0) {
+                    return $filter->implode('judul', ', ');
                 } else {
                     return '-';
                 }
@@ -111,6 +109,8 @@ class PengembalianDataTable extends DataTable
             Column::make('id')->title('ID'),
             Column::computed('nis')->title('NIS'),
             Column::computed('anggota')->title('Nama'),
+            Column::computed('jenis_kelamin'),
+            Column::computed('kelas'),
             Column::computed('sudah'),
             Column::computed('belum'),
             Column::computed('action')->title('Aksi')->width(85),

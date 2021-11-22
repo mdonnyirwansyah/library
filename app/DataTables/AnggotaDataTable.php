@@ -20,7 +20,7 @@ class AnggotaDataTable extends DataTable
             ->eloquent($query)
             ->addIndexColumn()
             ->addColumn('kelas', function ($data) {
-                return $data->kelas->nama;
+                return $data->kelas->kelas;
             })
             ->addColumn('action', function ($data) {
                 return '
@@ -71,6 +71,7 @@ class AnggotaDataTable extends DataTable
             Column::make('DT_RowIndex')->searchable(false)->title('No')->width(50),
             Column::make('nis')->title('NIS'),
             Column::make('nama'),
+            Column::make('jenis_kelamin'),
             Column::computed('kelas'),
             Column::computed('action')->title('Aksi')->width(85),
         ];

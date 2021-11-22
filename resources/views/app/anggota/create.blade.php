@@ -16,7 +16,12 @@
     }
 
     $(document).ready( function() {
-        $('.select2').select2({
+        $('#jenis_kelamin').select2({
+            theme: 'bootstrap4',
+            placeholder: 'Pilih jenis kelamin',
+        });
+
+        $('#kelas').select2({
             theme: 'bootstrap4',
             placeholder: 'Pilih kelas',
         });

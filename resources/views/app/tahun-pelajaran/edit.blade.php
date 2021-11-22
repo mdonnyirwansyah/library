@@ -1,17 +1,19 @@
 @extends('layouts.app')
 
-@section('title', 'Tambah Periode')
+@section('title', 'Edit Tahun Pelajaran')
 
 @push('javascript')
 <script>
     function printErrorMsg (msg) {
         $.each( msg, function ( key, value ) {
             $('#'+key).addClass('is-invalid');
+            $('#thumbnail-input').addClass('is-invalid');
             $('.'+key+'_err').text(value);
             $('#'+key).change(function () {
                 $('#'+key).removeClass('is-invalid');
+                $('#thumbnail-input').removeClass('is-invalid');
                 $('#'+key).addClass('is-valid');
-            });
+            } );
         });
     }
 
@@ -36,7 +38,7 @@
 
                         async function redirect() {
                         let promise = new Promise(function(resolve, reject) {
-                            setTimeout(function() { resolve('{{ route("periode.index") }}'); }, 3000);
+                            setTimeout(function() { resolve('{{ route("tahun-pelajaran.index") }}'); }, 3000);
                         });
                         window.location.href = await promise;
                         }
@@ -44,7 +46,6 @@
                         redirect();
                     }else{
                         printErrorMsg(response.error);
-                        $('#btn').attr('disabled', false);
                     }
                 },
                 error: function(xhr, ajaxOptions, thrownError) {
@@ -60,19 +61,19 @@
 <section class="section">
     <div class="section-header">
         <div class="section-header-back">
-            <a href="{{ route('periode.index') }}" class="btn btn-icon">
+            <a href="{{ route('tahun-pelajaran.index') }}" class="btn btn-icon">
                 <i class="fas fa-arrow-left"></i>
             </a>
         </div>
-        <h1>Tambah Periode</h1>
+        <h1>Edit Tahun Pelajaran</h1>
         <div class="section-header-breadcrumb">
             <div class="breadcrumb-item active">
                 <a href="{{ route('dashboard') }}">Dashboard</a>
             </div>
             <div class="breadcrumb-item">
-                <a href="{{ route('periode.index') }}">Periode</a>
+                <a href="{{ route('tahun-pelajaran.index') }}">Tahun Pelajaran</a>
             </div>
-            <div class="breadcrumb-item">Tambah Periode</div>
+            <div class="breadcrumb-item">Edit Tahun Pelajaran</div>
         </div>
     </div>
 
@@ -81,8 +82,9 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('periode.store') }}" id="form-action" enctype="multipart/form-data">
-                            @include('app.periode.partials.form')
+                        <form action="{{ route('tahun-pelajaran.update', $tahun_pelajaran) }}" id="form-action" enctype="multipart/form-data">
+                            @method('PUT')
+                            @include('app.tahun-pelajaran.partials.form')
                         </form>
                     </div>
                 </div>

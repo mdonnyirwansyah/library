@@ -18,10 +18,14 @@
     }
 
     $(document).ready( function() {
-        $('.select2').select2({
-            placeholder: 'Pilih Buku',
+        $('#tahun_pelajaran').select2({
+            theme: 'bootstrap4',
+            placeholder: 'Pilih tahun pelajaran',
         });
 
+        $('#buku').select2({
+            placeholder: 'Pilih buku',
+        });
 
         $('#nis').change(function (e) {
             let nis = $('#nis').val();

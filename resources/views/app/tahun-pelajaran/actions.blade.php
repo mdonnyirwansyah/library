@@ -16,7 +16,7 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function (response) {
-                        $('#periode-table').DataTable().draw();
+                        $('#tahunpelajaran-table').DataTable().draw();
                         toastr.success(response.success, 'Selamat,');
                     },
                 });

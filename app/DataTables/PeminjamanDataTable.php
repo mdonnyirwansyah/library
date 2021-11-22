@@ -5,7 +5,6 @@ namespace App\DataTables;
 use App\Models\Peminjaman;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
-use Illuminate\Support\Str;
 class PeminjamanDataTable extends DataTable
 {
     /**
@@ -22,18 +21,20 @@ class PeminjamanDataTable extends DataTable
             ->addColumn('nis', function ($data) {
                 return $data->anggota->nis;
             })
-            ->addColumn('periode', function ($data) {
-                return $data->periode->nama;
+            ->addColumn('tahun', function ($data) {
+                return $data->tahun_pelajaran->tahun;
             })
             ->addColumn('anggota', function ($data) {
                 return $data->anggota->nama;
             })
+            ->addColumn('jenis_kelamin', function ($data) {
+                return $data->anggota->jenis_kelamin;
+            })
+            ->addColumn('kelas', function ($data) {
+                return $data->anggota->kelas->kelas;
+            })
             ->addColumn('buku', function ($data) {
-                $map = $data->buku->map(function ($item) {
-                    return ['judul' => $item->judul.' '.$item->kategori->nama];
-                });
-
-                return $map->implode('judul', ', ');
+                return $data->buku->implode('judul', ', ');
             })
             ->addColumn('action', function ($data) {
                 $id = strtotime($data->created_at);
@@ -87,11 +88,13 @@ class PeminjamanDataTable extends DataTable
     {
         return [
             Column::make('DT_RowIndex')->searchable(false)->title('No')->width(50),
-            Column::computed('periode')->title('Tahun Pelajaran'),
+            Column::computed('tahun')->title('Tahun Pelajaran'),
             Column::make('created_at')->title('Tanggal'),
             Column::make('id')->title('ID'),
             Column::computed('nis')->title('NIS'),
             Column::computed('anggota')->title('Nama'),
+            Column::computed('jenis_kelamin'),
+            Column::computed('kelas'),
             Column::computed('buku'),
             Column::computed('action')->title('Aksi')->width(85),
         ];

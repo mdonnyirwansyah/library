@@ -2,12 +2,14 @@
 
 namespace App\DataTables;
 
-use App\Models\Periode;
-
+use App\Models\TahunPelajaran;
+use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
+use Yajra\DataTables\Html\Editor\Editor;
+use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class PeriodeDataTable extends DataTable
+class TahunPelajaranDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -22,10 +24,10 @@ class PeriodeDataTable extends DataTable
             ->addIndexColumn()
             ->addColumn('action', function ($data) {
                 return '
-                    <a data-toggle="tooltip" data-placement="top" title="Edit" href="'.route('periode.edit', $data).'" class="btn btn-icon">
+                    <a data-toggle="tooltip" data-placement="top" title="Edit" href="'.route('tahun-pelajaran.edit', $data).'" class="btn btn-icon">
                         <i class="fas fa-pen text-info"></i>
                     </a>
-                    <button data-toggle="tooltip" data-placement="top" title="Hapus" onClick="deleteRecord('.$data->id.')" id="delete-'.$data->id.'" delete-route="'.route('periode.destroy', $data).'" class="btn btn-icon">
+                    <button data-toggle="tooltip" data-placement="top" title="Hapus" onClick="deleteRecord('.$data->id.')" id="delete-'.$data->id.'" delete-route="'.route('tahun-pelajaran.destroy', $data).'" class="btn btn-icon">
                         <i class="fas fa-trash text-danger"></i>
                     </button>
                 ';
@@ -36,10 +38,10 @@ class PeriodeDataTable extends DataTable
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Periode $model
+     * @param \App\Models\TahunPelajaran $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Periode $model)
+    public function query(TahunPelajaran $model)
     {
         return $model->newQuery();
     }
@@ -52,7 +54,7 @@ class PeriodeDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('periode-table')
+                    ->setTableId('tahunpelajaran-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->orderBy([1, 'ASC']);
@@ -67,7 +69,7 @@ class PeriodeDataTable extends DataTable
     {
         return [
             Column::make('DT_RowIndex')->searchable(false)->title('No')->width(50),
-            Column::make('nama'),
+            Column::make('tahun'),
             Column::computed('action')->title('Aksi')->width(85),
         ];
     }
@@ -79,6 +81,6 @@ class PeriodeDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'Periode_' . date('YmdHis');
+        return 'TahunPelajaran_' . date('YmdHis');
     }
 }

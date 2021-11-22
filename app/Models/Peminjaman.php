@@ -23,9 +23,9 @@ class Peminjaman extends Model
         return $this->belongsTo(Anggota::class);
     }
 
-    public function periode()
+    public function Tahun_pelajaran()
     {
-        return $this->belongsTo(Periode::class);
+        return $this->belongsTo(TahunPelajaran::class);
     }
 
     public function buku()

@@ -12,9 +12,9 @@
       </a>
     </li>
 
-    <li class="{{ request()->is('periode*') ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('periode.index') }}">
-          <i class="fas fa-business-time"></i> <span>Periode</span>
+    <li class="{{ request()->is('tahun-pelajaran*') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('tahun-pelajaran.index') }}">
+          <i class="fas fa-business-time"></i> <span>Tahun Pelajaran</span>
         </a>
     </li>
 

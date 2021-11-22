@@ -6,8 +6,7 @@ use App\DataTables\PeminjamanDataTable;
 use App\Models\Anggota;
 use App\Models\Buku;
 use App\Models\Peminjaman;
-use App\Models\Pengembalian;
-use App\Models\Periode;
+use App\Models\TahunPelajaran;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -21,17 +20,17 @@ class PeminjamanController extends Controller
 
     public function create()
     {
-        $periode = Periode::all();
+        $tahun_pelajaran = TahunPelajaran::all();
         $buku = Buku::all();
 
-        return view('app.peminjaman.create', compact('periode', 'buku'));
+        return view('app.peminjaman.create', compact('tahun_pelajaran', 'buku'));
     }
 
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'nis' => 'required',
-            'periode' => 'required',
+            'tahun_pelajaran' => 'required',
             'buku' => 'required',
         ]);
 
@@ -41,7 +40,7 @@ class PeminjamanController extends Controller
             DB::transaction(function() use ($anggota, $request) {
                 $peminjaman = new Peminjaman();
                 $peminjaman->anggota_id = $anggota->id;
-                $peminjaman->periode_id = $request->periode;
+                $peminjaman->tahun_pelajaran_id = $request->tahun_pelajaran;
                 $peminjaman->save();
 
                 if ($peminjaman) {
@@ -81,17 +80,17 @@ class PeminjamanController extends Controller
 
     public function edit(Peminjaman $peminjaman)
     {
-        $periode = Periode::all();
+        $tahun_pelajaran = TahunPelajaran::all();
         $buku = Buku::all();
 
-        return view('app.peminjaman.edit', compact('peminjaman', 'periode', 'buku'));
+        return view('app.peminjaman.edit', compact('peminjaman', 'tahun_pelajaran', 'buku'));
     }
 
     public function update(Request $request, Peminjaman $peminjaman)
     {
         $validator = Validator::make($request->all(), [
             'nis' => 'required',
-            'periode' => 'required',
+            'tahun_pelajaran' => 'required',
             'buku' => 'required',
         ]);
 
@@ -106,7 +105,7 @@ class PeminjamanController extends Controller
                 }
 
                 $peminjaman->anggota_id = $anggota->id;
-                $peminjaman->periode_id = $request->periode;
+                $peminjaman->tahun_pelajaran_id = $request->tahun_pelajaran;
                 $peminjaman->save();
 
                 $peminjaman->buku()->sync($request->buku);

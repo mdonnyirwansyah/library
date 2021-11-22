@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             AnggotaSeeder::class,
             KategoriSeeder::class,
             BukuSeeder::class,
-            PeriodeSeeder::class
+            TahunPelajaranSeeder::class
         ]);
     }
 }
