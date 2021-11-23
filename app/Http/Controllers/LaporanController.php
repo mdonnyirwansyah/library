@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Anggota;
 use App\Models\Kategori;
 use App\Models\Kelas;
 use App\Models\Peminjaman;
@@ -9,7 +10,9 @@ use App\Models\Pengembalian;
 use App\Models\TahunPelajaran;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
+use PDF;
 
 class LaporanController extends Controller
 {
@@ -20,17 +23,33 @@ class LaporanController extends Controller
         return view('app.laporan.anggota', compact('kelas'));
     }
 
-    public function getAnggotaData(Request $request)
+    public function getAnggota(Request $request)
     {
-        if ($request->kelas_id) {
-            $anggota = DB::table('anggota')->join('kelas', 'anggota.kelas_id', '=', 'kelas.id')->where('anggota.kelas_id', '=', $request->kelas_id)->select(['anggota.nis as nis', 'anggota.nama as nama', 'anggota.jenis_kelamin as jenis_kelamin', 'kelas.kelas as kelas']);
+        if ($request->kelas) {
+            $anggota = Anggota::where('kelas_id', $request->kelas)->get();
         } else {
-            $anggota = DB::table('anggota')->join('kelas', 'anggota.kelas_id', '=', 'kelas.id')->select(['anggota.nis as nis', 'anggota.nama as nama', 'anggota.jenis_kelamin as jenis_kelamin', 'kelas.kelas as kelas']);
+            $anggota = Anggota::all();
         }
 
         return DataTables::of($anggota)
         ->addIndexColumn()
+        ->addColumn('kelas', function ($anggota) {
+            return $anggota->kelas->kelas;
+        })
         ->make(true);
+    }
+
+    public function printAnggota(Request $request)
+    {
+        Validator::make($request->all(), [
+            'kelas' => 'required',
+        ])->validate();
+
+        $anggota = Anggota::where('kelas_id', $request->kelas)->get();
+
+        $pdf = PDF::loadView('app.laporan.print-anggota', compact('anggota'));
+
+        return $pdf->stream('laporan-anggota-perpustakaan.pdf');
     }
 
     public function buku()
@@ -40,7 +59,7 @@ class LaporanController extends Controller
         return view('app.laporan.buku', compact('kategori'));
     }
 
-    public function getBukuData(Request $request)
+    public function getBuku(Request $request)
     {
         if ($request->kategori_id) {
             $buku = DB::table('buku')->join('kategori', 'buku.kategori_id', '=', 'kategori.id')->where('buku.kategori_id', '=', $request->kategori_id)->select(['buku.kode as kode', 'buku.judul as judul', 'kategori.nama as kategori']);
@@ -61,11 +80,11 @@ class LaporanController extends Controller
         return view('app.laporan.peminjaman', compact('kelas', 'tahun_pelajaran'));
     }
 
-    public function getPeminjamanData(Request $request)
+    public function getPeminjaman(Request $request)
     {
-        if ($request->kelas_id || $request->tahun_pelajaran_id) {
+        if ($request->kelas || $request->tahun_pelajaran_id) {
             $peminjaman = Peminjaman::whereRelation(
-                'anggota', 'kelas_id', $request->kelas_id
+                'anggota', 'kelas', $request->kelas
             )
             ->where('tahun_pelajaran_id', $request->tahun_pelajaran_id)
             ->get();
@@ -107,12 +126,12 @@ class LaporanController extends Controller
         return view('app.laporan.pengembalian', compact('kelas', 'tahun_pelajaran'));
     }
 
-    public function getPengembalianData(Request $request)
+    public function getPengembalian(Request $request)
     {
-        if ($request->kelas_id || $request->tahun_pelajaran_id) {
+        if ($request->kelas || $request->tahun_pelajaran_id) {
             $pengembalian = Pengembalian::whereRelation(
                 'peminjaman', function ($query) use ($request) {
-                    $query->whereRelation('anggota', 'kelas_id', $request->kelas_id);
+                    $query->whereRelation('anggota', 'kelas_id', $request->kelas);
                 }
             )
             ->whereRelation(

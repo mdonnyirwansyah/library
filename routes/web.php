@@ -96,13 +96,14 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('laporan')->name('laporan.')->group(function () {
         Route::get('anggota', [LaporanController::class, 'anggota'])->name('anggota');
-        Route::post('get-anggota', [LaporanController::class, 'getAnggotaData'])->name('get-anggota');
+        Route::post('get-anggota', [LaporanController::class, 'getAnggota'])->name('get-anggota');
+        Route::post('print-anggota', [LaporanController::class, 'printAnggota'])->name('print-anggota');
         Route::get('buku', [LaporanController::class, 'buku'])->name('buku');
-        Route::post('get-buku', [LaporanController::class, 'getBukuData'])->name('get-buku');
+        Route::post('get-buku', [LaporanController::class, 'getBuku'])->name('get-buku');
         Route::get('peminjaman', [LaporanController::class, 'peminjaman'])->name('peminjaman');
-        Route::post('get-peminjaman', [LaporanController::class, 'getPeminjamanData'])->name('get-peminjaman');
+        Route::post('get-peminjaman', [LaporanController::class, 'getPeminjaman'])->name('get-peminjaman');
         Route::get('pengembalian', [LaporanController::class, 'pengembalian'])->name('pengembalian');
-        Route::post('get-pengembalian', [LaporanController::class, 'getPengembalianData'])->name('get-pengembalian');
+        Route::post('get-pengembalian', [LaporanController::class, 'getPengembalian'])->name('get-pengembalian');
     });
 
     Route::middleware(['auth.isAdministrator'])->prefix('users')->name('users.')->group(function () {

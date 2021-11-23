@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Anggota;
+use App\Models\Buku;
+use App\Models\Kelas;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -14,8 +18,11 @@ class DashboardController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $title = 'Dashboard';
+        $totalUsers = User::count();
+        $totalAnggota = Anggota::count();
+        $totalKelas = Kelas::count();
+        $totalBuku = Buku::count();
 
-        return view('app.dashboard', compact('title'));
+        return view('app.dashboard', compact('totalUsers', 'totalAnggota', 'totalKelas', 'totalBuku'));
     }
 }
