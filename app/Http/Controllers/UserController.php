@@ -42,7 +42,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $newUser = new CreateNewUser();
-        $user = $newUser->create($request->only(['nama', 'email', 'role', 'password', 'password_confirmation']));
+        $user = $newUser->create($request->all());
 
         if ($user) {
             return response()->json(['success' => 'New record has been created!']);

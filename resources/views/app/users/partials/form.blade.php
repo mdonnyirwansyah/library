@@ -22,7 +22,7 @@
   </div>
 </div>
 <div class="form-group row">
-  <label for="password_confirmation" class="col-form-label col-md-3">Confirm Password</label>
+  <label for="password_confirmation" class="col-form-label col-md-3">Konfirmasi Password</label>
   <div class="col-md-9">
     <input type="password" class="form-control form-control-sm" id="password_confirmation" name="password_confirmation" />
     <small class="invalid-feedback password_confirmation_err"></small>
