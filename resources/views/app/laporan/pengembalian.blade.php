@@ -40,15 +40,15 @@
                     orderable: false,
                     searchable: false
                 },
-                {data: 'tahun_pelajaran', name: 'tahun_pelajaran'},
+                {data: 'kode', name: 'kode'},
                 {data: 'tanggal', name: 'tanggal'},
-                {data: 'id', name: 'id'},
                 {data: 'nis', name: 'nis'},
                 {data: 'anggota', name: 'anggota'},
                 {data: 'jenis_kelamin', name: 'jenis_kelamin'},
                 {data: 'kelas', name: 'kelas'},
                 {data: 'sudah', name: 'sudah'},
-                {data: 'belum', name: 'belum'}
+                {data: 'belum', name: 'belum'},
+                {data: 'tahun_pelajaran', name: 'tahun_pelajaran'},
             ]
         });
     });
@@ -108,15 +108,15 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Tahun Pelajaran</th>
+                        <th>Kode</th>
                         <th>Tanggal</th>
-                        <th>ID</th>
                         <th>NIS</th>
                         <th>Nama</th>
                         <th>Jenis Kelamin</th>
                         <th>Kelas</th>
                         <th>Sudah</th>
                         <th>Belum</th>
+                        <th>Tahun Pelajaran</th>
                     </tr>
                 </thead>
             </table>

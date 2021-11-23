@@ -75,9 +75,6 @@ class LaporanController extends Controller
 
         return DataTables::of($peminjaman)
         ->addIndexColumn()
-        ->addColumn('tahun_pelajaran', function ($peminjaman) {
-            return $peminjaman->tahun_pelajaran->tahun;
-        })
         ->addColumn('nis', function ($peminjaman) {
             return $peminjaman->anggota->nis;
         })
@@ -95,6 +92,9 @@ class LaporanController extends Controller
         })
         ->editColumn('tanggal', function ($peminjaman) {
             return $peminjaman->created_at->format('Y-m-d');
+        })
+        ->addColumn('tahun_pelajaran', function ($peminjaman) {
+            return $peminjaman->tahun_pelajaran->tahun;
         })
         ->make(true);
     }
