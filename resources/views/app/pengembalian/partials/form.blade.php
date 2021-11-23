@@ -1,13 +1,14 @@
 <div class="form-group row mb-4">
-    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3" for="peminjaman_id">ID Peminjaman</label>
+    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3" for="kode">Kode Peminjaman</label>
     <div class="col-sm-12 col-md-7">
-        <input type="text" class="form-control" name="peminjaman_id" id="peminjaman_id" @isset($pengembalian) value="{{ $pengembalian->peminjaman_id }}" readonly @endisset />
-        <small class="invalid-feedback peminjaman_id_err"></small><small class="valid-feedback peminjaman_id_valid"></small>
+        <input type="text" class="form-control" name="kode" id="kode" @isset($pengembalian) value="{{ $pengembalian->kode }}" readonly @endisset />
+        <small class="invalid-feedback kode_err"></small><small class="valid-feedback kode_valid"></small>
     </div>
 </div>
 
 <div id="view-form-buku" style="display: none"></div>
 @isset($pengembalian)
+<input type="hidden" name="peminjaman_id" value="{{ $pengembalian->peminjaman_id }}">
 @foreach ($pengembalian->buku as $item)
 <div class="form-group row mb-4">
     <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">{{ $item->judul }}</label>

@@ -37,13 +37,11 @@ class PeminjamanDataTable extends DataTable
                 return $data->buku->implode('judul', ', ');
             })
             ->addColumn('action', function ($data) {
-                $id = strtotime($data->created_at);
-
                 return '
                     <a data-toggle="tooltip" data-placement="top" title="Edit" href="'.route('peminjaman.edit', $data).'" class="btn btn-icon">
                         <i class="fas fa-pen text-info"></i>
                     </a>
-                    <button data-toggle="tooltip" data-placement="top" title="Hapus" onClick="deleteRecord('.$id.')" id="delete-'.$id.'" delete-route="'.route('peminjaman.destroy', $data).'" class="btn btn-icon">
+                    <button data-toggle="tooltip" data-placement="top" title="Hapus" onClick="deleteRecord('.$data->id.')" id="delete-'.$data->id.'" delete-route="'.route('peminjaman.destroy', $data).'" class="btn btn-icon">
                         <i class="fas fa-trash text-danger"></i>
                     </button>
                 ';
@@ -88,14 +86,14 @@ class PeminjamanDataTable extends DataTable
     {
         return [
             Column::make('DT_RowIndex')->searchable(false)->title('No')->width(50),
-            Column::computed('tahun')->title('Tahun Pelajaran'),
+            Column::make('kode'),
             Column::make('created_at')->title('Tanggal'),
-            Column::make('id')->title('ID'),
             Column::computed('nis')->title('NIS'),
             Column::computed('anggota')->title('Nama'),
             Column::computed('jenis_kelamin'),
             Column::computed('kelas'),
             Column::computed('buku'),
+            Column::computed('tahun')->title('Tahun Pelajaran'),
             Column::computed('action')->title('Aksi')->width(85),
         ];
     }

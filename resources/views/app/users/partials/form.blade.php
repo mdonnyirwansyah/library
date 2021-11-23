@@ -6,10 +6,10 @@
   </div>
 </div>
 <div class="form-group row">
-  <label for="name" class="col-form-label col-md-3">Name</label>
+  <label for="nama" class="col-form-label col-md-3">Nama</label>
   <div class="col-md-9">
-    <input type="text" class="form-control form-control-sm" id="name" name="name" @isset($user) value="{{ $user->name }}" @endisset />
-    <small class="invalid-feedback name_err"></small>
+    <input type="text" class="form-control form-control-sm" id="nama" name="nama" @isset($user) value="{{ $user->name }}" @endisset />
+    <small class="invalid-feedback nama_err"></small>
   </div>
 </div>
 @isset($user)
@@ -30,13 +30,14 @@
 </div>
 @endisset
 <div class="form-group row">
-  <label for="role_id" class="col-form-label col-md-3">Role</label>
+  <label for="role" class="col-form-label col-md-3">Role</label>
   <div class="col-md-9">
-    <select class="form-select select2" style="width: 100%" name="role_id" id="role_id">
+    <select class="form-select select2" style="width: 100%" name="role" id="role">
+      <option value="" selected>Pilih role</option>
       @foreach ($roles as $role)
       <option value="{{ $role->id }}" @isset($user) @if($role->id === $user->role_id) selected @endif @endisset>{{ $role->name }}</option>
       @endforeach
     </select>
-    <small class="invalid-feedback role_id_err"></small>
+    <small class="invalid-feedback role_err"></small>
   </div>
 </div>

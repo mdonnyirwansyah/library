@@ -54,13 +54,11 @@ class PengembalianDataTable extends DataTable
                 }
             })
             ->addColumn('action', function ($data) {
-                $id = strtotime($data->created_at);
-
                 return '
                     <a data-toggle="tooltip" data-placement="top" title="Edit" href="'.route('pengembalian.edit', $data).'" class="btn btn-icon">
                         <i class="fas fa-pen text-info"></i>
                     </a>
-                    <button data-toggle="tooltip" data-placement="top" title="Hapus" onClick="deleteRecord('.$id.')" id="delete-'.$id.'" delete-route="'.route('pengembalian.destroy', $data).'" class="btn btn-icon">
+                    <button data-toggle="tooltip" data-placement="top" title="Hapus" onClick="deleteRecord('.$data->id.')" id="delete-'.$data->id.'" delete-route="'.route('pengembalian.destroy', $data).'" class="btn btn-icon">
                         <i class="fas fa-trash text-danger"></i>
                     </button>
                 ';
@@ -105,8 +103,8 @@ class PengembalianDataTable extends DataTable
     {
         return [
             Column::make('DT_RowIndex')->searchable(false)->title('No')->width(50),
+            Column::make('kode'),
             Column::make('created_at')->title('Tanggal'),
-            Column::make('id')->title('ID'),
             Column::computed('nis')->title('NIS'),
             Column::computed('anggota')->title('Nama'),
             Column::computed('jenis_kelamin'),

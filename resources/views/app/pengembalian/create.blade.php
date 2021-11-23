@@ -22,33 +22,33 @@
     }
 
     $(document).ready( function() {
-        $('#peminjaman_id').change(function (e) {
+        $('#kode').change(function (e) {
             $('#btn').attr('disabled', true);
         });
 
-        $('#peminjaman_id').change(function (e) {
-            let peminjaman_id = $('#peminjaman_id').val();
+        $('#kode').change(function (e) {
+            let kode = $('#kode').val();
 
             $.ajax({
                 url: "{{ route('peminjaman.find') }}",
                 type: "POST",
                 data: {
-                    peminjaman_id
+                    kode
                 },
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function (response) {
                     if(response.success){
-                        $('#peminjaman_id').removeClass('is-invalid');
-                        $('#peminjaman_id').addClass('is-valid');
-                        $('.peminjaman_id_valid').text('Nama Peminjam: ' + response.success);
+                        $('#kode').removeClass('is-invalid');
+                        $('#kode').addClass('is-valid');
+                        $('.kode_valid').text('Nama Peminjam: ' + response.success);
                         $('#btn').attr('disabled', false);
                         show(response.route);
                     }else{
-                        $('#peminjaman_id').removeClass('is-valid');
-                        $('#peminjaman_id').addClass('is-invalid');
-                        $('.peminjaman_id_err').text(response.error);
+                        $('#kode').removeClass('is-valid');
+                        $('#kode').addClass('is-invalid');
+                        $('.kode_err').text(response.error);
                         $('#btn').attr('disabled', true);
                     }
                 },

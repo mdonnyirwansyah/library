@@ -12,6 +12,7 @@
       </a>
     </li>
 
+    @can('is-administrator')
     <li class="{{ request()->is('tahun-pelajaran*') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('tahun-pelajaran.index') }}">
           <i class="fas fa-business-time"></i> <span>Tahun Pelajaran</span>
@@ -41,7 +42,9 @@
         <i class="fas fa-book"></i> <span>Buku</span>
       </a>
     </li>
+    @endcan
 
+    @can('is-operator')
     <li class="{{ request()->is('peminjaman*') ? 'active' : '' }}">
       <a class="nav-link" href="{{ route('peminjaman.index') }}">
         <i class="fas fa-upload"></i> <span>Peminjaman</span>
@@ -53,6 +56,7 @@
         <i class="fas fa-download"></i> <span>Pengembalian</span>
       </a>
     </li>
+    @endcan
 
     <li class="dropdown {{ request()->is('laporan*') ? 'active' : '' }}">
       <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-file-alt"></i> <span>Laporan</span></a>
@@ -64,10 +68,12 @@
       </ul>
     </li>
 
+    @can('is-administrator')
     <li class="{{ request()->is('users') ? 'active' : '' }}">
       <a class="nav-link" href="{{ route('users.index') }}">
         <i class="fas fa-users"></i> <span>Users</span>
       </a>
     </li>
+    @endcan
   </ul>
 </aside>

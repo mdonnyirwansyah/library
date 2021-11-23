@@ -14,7 +14,8 @@ class CreatePeminjamenTable extends Migration
     public function up()
     {
         Schema::create('peminjaman', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->id('id');
+            $table->string('kode');
             $table->foreignId('anggota_id')->constrained('anggota', 'id')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('tahun_pelajaran_id')->constrained('tahun_pelajaran', 'id')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();

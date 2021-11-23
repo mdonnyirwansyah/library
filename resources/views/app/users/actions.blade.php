@@ -114,7 +114,7 @@
             $('#modal-form').modal('show');
             $('.select2').select2({
                 theme: 'bootstrap4',
-                placeholder: 'Select roles',
+                placeholder: 'Pilih role',
             });
 
             $('#form-action').submit(function (e) {
@@ -157,7 +157,7 @@
             $('#modal-form').modal('show');
             $('.select2').select2({
                 theme: 'bootstrap4',
-                placeholder: 'Select roles',
+                placeholder: 'Pilih role',
             });
 
             $('#form-action').submit(function (e) {

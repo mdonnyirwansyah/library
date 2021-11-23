@@ -2,19 +2,14 @@
 
 namespace App\Models;
 
-use App\Models\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Pengembalian extends Model
 {
-    use HasFactory, HasUuid;
+    use HasFactory;
 
     protected $table = 'pengembalian';
-
-    protected $keyType = 'string';
-
-    public $incrementing = false;
 
     protected $guarded = [];
 
@@ -26,5 +21,14 @@ class Pengembalian extends Model
     public function buku()
     {
         return $this->belongsToMany(Buku::class)->withPivot(['status']);
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating( function ($model) {
+            $model->kode = str_pad(Pengembalian::max('id') + 1, 4, '0', STR_PAD_LEFT);
+        });
     }
 }

@@ -2,19 +2,14 @@
 
 namespace App\Models;
 
-use App\Models\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Peminjaman extends Model
 {
-    use HasFactory, HasUuid;
+    use HasFactory;
 
     protected $table = 'peminjaman';
-
-    protected $keyType = 'string';
-
-    public $incrementing = false;
 
     protected $guarded = [];
 
@@ -36,5 +31,14 @@ class Peminjaman extends Model
     public function pengembalian()
     {
         return $this->hasOne(Pengembalian::class);
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating( function ($model) {
+            $model->kode = str_pad(Peminjaman::max('id') + 1, 4, '0', STR_PAD_LEFT);
+        });
     }
 }

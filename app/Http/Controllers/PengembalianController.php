@@ -24,10 +24,11 @@ class PengembalianController extends Controller
 
     public function store(Request $request)
     {
+        $peminjaman = Peminjaman::where('kode', $request->kode)->first();
         $req = $request->all();
 
         $validator = Validator::make($request->all(), [
-            'peminjaman_id' => 'required|unique:pengembalian',
+            'kode' => 'required|unique:pengembalian',
         ]);
 
         if ($validator->passes()) {
@@ -37,9 +38,9 @@ class PengembalianController extends Controller
                 return ['buku_id' => $item['id'], 'status' => $item['status']];
             });
 
-            DB::transaction(function() use ($request, $buku) {
+            DB::transaction(function() use ($request, $peminjaman, $buku) {
                 $pengembalian = new Pengembalian();
-                $pengembalian->peminjaman_id = $request->peminjaman_id;
+                $pengembalian->peminjaman_id = $peminjaman->id;
                 $pengembalian->save();
 
                 if ($pengembalian) {
@@ -70,7 +71,7 @@ class PengembalianController extends Controller
         $data_buku = $req['pengembalian'];
 
         $validator = Validator::make($request->all(), [
-            'peminjaman_id' => 'required|unique:pengembalian,peminjaman_id,' .$pengembalian->id,
+            'kode' => 'required|unique:pengembalian,peminjaman_id,' .$pengembalian->id,
         ]);
 
         if ($validator->passes()) {

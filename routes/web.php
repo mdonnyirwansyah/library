@@ -26,7 +26,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth'])->group(function () {
     Route::get('/', DashboardController::class)->name('dashboard');
 
-    Route::prefix('tahun-pelajaran')->name('tahun-pelajaran.')->group(function () {
+    Route::middleware(['auth.isAdministrator'])->prefix('tahun-pelajaran')->name('tahun-pelajaran.')->group(function () {
         Route::get('', [TahunPelajaranController::class, 'index'])->name('index');
         Route::get('create', [TahunPelajaranController::class, 'create'])->name('create');
         Route::post('', [TahunPelajaranController::class, 'store'])->name('store');
@@ -35,7 +35,7 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('{tahun_pelajaran:slug}', [TahunPelajaranController::class, 'destroy'])->name('destroy');
     });
 
-    Route::prefix('kelas')->name('kelas.')->group(function () {
+    Route::middleware(['auth.isAdministrator'])->prefix('kelas')->name('kelas.')->group(function () {
         Route::get('', [KelasController::class, 'index'])->name('index');
         Route::get('create', [KelasController::class, 'create'])->name('create');
         Route::post('', [KelasController::class, 'store'])->name('store');
@@ -45,16 +45,18 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::prefix('anggota')->name('anggota.')->group(function () {
-        Route::get('', [AnggotaController::class, 'index'])->name('index');
-        Route::get('create', [AnggotaController::class, 'create'])->name('create');
-        Route::post('', [AnggotaController::class, 'store'])->name('store');
+        Route::middleware(['auth.isAdministrator'])->group(function () {
+            Route::get('', [AnggotaController::class, 'index'])->name('index');
+            Route::get('create', [AnggotaController::class, 'create'])->name('create');
+            Route::post('', [AnggotaController::class, 'store'])->name('store');
+            Route::get('edit/{anggota:slug}', [AnggotaController::class, 'edit'])->name('edit');
+            Route::put('{anggota:slug}', [AnggotaController::class, 'update'])->name('update');
+            Route::delete('{anggota:slug}', [AnggotaController::class, 'destroy'])->name('destroy');
+        });
         Route::post('find', [AnggotaController::class, 'find'])->name('find');
-        Route::get('edit/{anggota:slug}', [AnggotaController::class, 'edit'])->name('edit');
-        Route::put('{anggota:slug}', [AnggotaController::class, 'update'])->name('update');
-        Route::delete('{anggota:slug}', [AnggotaController::class, 'destroy'])->name('destroy');
     });
 
-    Route::prefix('kategori')->name('kategori.')->group(function () {
+    Route::middleware(['auth.isAdministrator'])->prefix('kategori')->name('kategori.')->group(function () {
         Route::get('', [KategoriController::class, 'index'])->name('index');
         Route::get('create', [KategoriController::class, 'create'])->name('create');
         Route::post('', [KategoriController::class, 'store'])->name('store');
@@ -63,7 +65,7 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('{kategori:slug}', [KategoriController::class, 'destroy'])->name('destroy');
     });
 
-    Route::prefix('buku')->name('buku.')->group(function () {
+    Route::middleware(['auth.isAdministrator'])->prefix('buku')->name('buku.')->group(function () {
         Route::get('', [BukuController::class, 'index'])->name('index');
         Route::get('create', [BukuController::class, 'create'])->name('create');
         Route::post('', [BukuController::class, 'store'])->name('store');
@@ -72,7 +74,7 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('{buku:slug}', [BukuController::class, 'destroy'])->name('destroy');
     });
 
-    Route::prefix('peminjaman')->name('peminjaman.')->group(function () {
+    Route::middleware(['auth.isOperator'])->prefix('peminjaman')->name('peminjaman.')->group(function () {
         Route::get('', [PeminjamanController::class, 'index'])->name('index');
         Route::get('create', [PeminjamanController::class, 'create'])->name('create');
         Route::post('', [PeminjamanController::class, 'store'])->name('store');
@@ -103,7 +105,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('get-pengembalian', [LaporanController::class, 'getPengembalianData'])->name('get-pengembalian');
     });
 
-    Route::prefix('users')->name('users.')->group(function () {
+    Route::middleware(['auth.isAdministrator'])->prefix('users')->name('users.')->group(function () {
         Route::get('', [UserController::class, 'index'])->name('index');
         Route::get('create', [UserController::class, 'create'])->name('create');
         Route::post('', [UserController::class, 'store'])->name('store');

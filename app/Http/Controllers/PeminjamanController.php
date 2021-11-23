@@ -62,7 +62,7 @@ class PeminjamanController extends Controller
 
     public function find(Request $request)
     {
-        $peminjaman = Peminjaman::find($request->peminjaman_id);
+        $peminjaman = Peminjaman::where('kode', $request->kode)->first();
 
         $route = route('peminjaman.show', $peminjaman->id);
 

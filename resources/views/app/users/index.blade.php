@@ -2,12 +2,7 @@
 
 @section('title', 'Users')
 
-@push('stylesheet')
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.25/r-2.2.9/datatables.min.css"/>
-@endpush
-
 @push('javascript')
-  <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.25/r-2.2.9/datatables.min.js"></script>
   {!! $dataTable->scripts() !!}
   @include('app.users.actions')
 @endpush

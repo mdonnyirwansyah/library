@@ -42,7 +42,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $newUser = new CreateNewUser();
-        $user = $newUser->create($request->only(['name', 'email', 'role_id', 'password', 'password_confirmation']));
+        $user = $newUser->create($request->only(['nama', 'email', 'role', 'password', 'password_confirmation']));
 
         if ($user) {
             return response()->json(['success' => 'New record has been created!']);
@@ -75,13 +75,13 @@ class UserController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'email' => 'required|unique:users,email,' .$user->id,
-            'name' => 'required'
+            'nama' => 'required'
         ]);
 
         if ($validator->passes()) {
             $user->email = $request->email;
-            $user->name = $request->name;
-            $user->role_id = $request->role_id;
+            $user->name = $request->nama;
+            $user->role_id = $request->role;
             $user->save();
 
             return response()->json(['success' => 'Record has been updated!']);
