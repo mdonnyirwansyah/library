@@ -23,7 +23,7 @@
                 url: "{{ route('laporan.get-buku') }}",
                 type: "POST",
                 data: function (d) {
-                    d.kategori_id = $('#kategori_id').val();
+                    d.kategori = $('#kategori').val();
                 },
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -38,6 +38,10 @@
                 {data: 'kode', name: 'kode'},
                 {data: 'judul', name: 'judul'},
                 {data: 'kategori', name: 'kategori'},
+                {data: 'pengarang', name: 'pengarang'},
+                {data: 'penerbit', name: 'penerbit'},
+                {data: 'tahun', name: 'tahun'},
+                {data: 'stok', name: 'stok'},
             ]
         });
     });
@@ -62,21 +66,28 @@
       </div>
       <div class="card-body">
         <div class="col-12">
-            <div class="row">
-                <div class="form-group col-md-4">
-                    <label for="kategori_id">Kategori</label>
-                    <select class="form-control select2 filter" style="width: 100%" name="kategori_id" id="kategori_id">
-                        <option value="" selected>Pilih kategori</option>
-                        @foreach ($kategori as $item)
-                        <option value="{{ $item->id }}" >{{ $item->nama }}</option>
-                        @endforeach
-                    </select>
+            <form action="{{ route('laporan.print-buku') }}" method="post">
+                @csrf
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label for="kategori">Kategori</label>
+                        <select class="form-control select2 filter @error('kategori') is-invalid @enderror" style="width: 100%" name="kategori" id="kategori">
+                            <option value="" selected>Pilih kategori</option>
+                            @foreach ($kategori as $item)
+                            <option value="{{ $item->id }}" >{{ $item->nama }}</option>
+                            @endforeach
+                        </select>
+                        @error('kategori')
+                            <span class="invalid-feedback" role="alert">
+                                <small>{{ $message }}</small>
+                            </span>
+                        @enderror
+                    </div>
                 </div>
-            </div>
-            <div class="mb-2">
                 <div class="mb-2">
-              <a href="#" class="btn btn-primary">Cetak</a>
-            </div>
+                    <button class="btn btn-primary">Cetak</button>
+                </div>
+            </form>
         </div>
       </div>
     </div>
@@ -92,6 +103,10 @@
                         <th>Kode</th>
                         <th>Judul</th>
                         <th>Kategori</th>
+                        <th>Pengarang</th>
+                        <th>Penerbit</th>
+                        <th>Tahun</th>
+                        <th>Stok</th>
                     </tr>
                 </thead>
             </table>

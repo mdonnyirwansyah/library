@@ -82,7 +82,7 @@
                     </div>
                 </div>
                 <div class="mb-2">
-                <button class="btn btn-primary">Cetak</button>
+                    <button class="btn btn-primary">Cetak</button>
                 </div>
             </form>
         </div>

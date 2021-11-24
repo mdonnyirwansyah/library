@@ -72,6 +72,9 @@ class BukuDataTable extends DataTable
             Column::make('kode'),
             Column::make('judul'),
             Column::computed('kategori'),
+            Column::make('pengarang'),
+            Column::make('penerbit'),
+            Column::make('tahun'),
             Column::make('stok'),
             Column::computed('action')->title('Aksi')->width(85),
         ];

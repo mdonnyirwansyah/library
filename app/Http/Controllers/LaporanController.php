@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Anggota;
+use App\Models\Buku;
 use App\Models\Kategori;
 use App\Models\Kelas;
 use App\Models\Peminjaman;
@@ -45,11 +46,13 @@ class LaporanController extends Controller
             'kelas' => 'required',
         ])->validate();
 
+        $kelas = Kelas::find($request->kelas);
         $anggota = Anggota::where('kelas_id', $request->kelas)->get();
 
-        $pdf = PDF::loadView('app.laporan.print-anggota', compact('anggota'));
+        $pdf = PDF::loadView('app.laporan.print-anggota', compact('kelas', 'anggota'))
+        ->setPaper('a4', 'portrait');
 
-        return $pdf->stream('laporan-anggota-perpustakaan.pdf');
+        return $pdf->download('laporan-anggota-perpustakaan-'.$kelas->kelas.'.pdf');
     }
 
     public function buku()
@@ -61,15 +64,33 @@ class LaporanController extends Controller
 
     public function getBuku(Request $request)
     {
-        if ($request->kategori_id) {
-            $buku = DB::table('buku')->join('kategori', 'buku.kategori_id', '=', 'kategori.id')->where('buku.kategori_id', '=', $request->kategori_id)->select(['buku.kode as kode', 'buku.judul as judul', 'kategori.nama as kategori']);
+        if ($request->kategori) {
+            $buku = Buku::where('buku.kategori_id', $request->kategori)->get();
         } else {
-            $buku = DB::table('buku')->join('kategori', 'buku.kategori_id', '=', 'kategori.id')->select(['buku.kode as kode', 'buku.judul as judul', 'kategori.nama as kategori']);
+            $buku = Buku::all();
         }
 
         return DataTables::of($buku)
         ->addIndexColumn()
+        ->addColumn('kategori', function ($buku) {
+            return $buku->kategori->nama;
+        })
         ->make(true);
+    }
+
+    public function printBuku(Request $request)
+    {
+        Validator::make($request->all(), [
+            'kategori' => 'required',
+        ])->validate();
+
+        $kategori = Kategori::find($request->kategori);
+        $buku = Buku::where('kategori_id', $request->kategori)->get();
+
+        $pdf = PDF::loadView('app.laporan.print-buku', compact('kategori', 'buku'))
+        ->setPaper('a4', 'landscape');
+
+        return $pdf->download('laporan-buku-perpustakaan-'.$kategori->nama.'.pdf');
     }
 
     public function peminjaman()

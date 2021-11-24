@@ -39,9 +39,9 @@
     <body>
         <div>
             <div class="header">
-                <h3><b>Laporan Anggota Perpustakaan</b></h3>
+                <h3><b>Laporan Buku Perpustakaan</b></h3>
                 <h3><b>SMAN 1 Bagan Sinembah</b></h3>
-                <h3><b>Kelas {{ $kelas->kelas }}</b></h3>
+                <h3><b>Kategori {{ $kategori->nama }}</b></h3>
             </div>
 
             <div>
@@ -49,18 +49,24 @@
                     <thead>
                         <tr>
                             <th width="5%">No</th>
-                            <th>NIS</th>
-                            <th>Nama</th>
-                            <th>Jenis Kelamin</th>
+                            <th>Kode</th>
+                            <th>Judul</th>
+                            <th>Pengarang</th>
+                            <th>Penerbit</th>
+                            <th>Tahun</th>
+                            <th>Stok</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($anggota as $index => $item)
+                        @foreach ($buku as $index => $item)
                         <tr>
                             <td style="text-align: center;">{{ $index + 1 }}</td>
-                            <td>{{ $item->nis }}</td>
-                            <td>{{ $item->nama }}</td>
-                            <td>{{ $item->jenis_kelamin }}</td>
+                            <td>{{ $item->kode }}</td>
+                            <td>{{ $item->judul }}</td>
+                            <td>{{ $item->pengarang }}</td>
+                            <td>{{ $item->penerbit }}</td>
+                            <td>{{ $item->tahun }}</td>
+                            <td>{{ $item->stok }}</td>
                         </tr>
                         @endforeach
                     </tbody>
