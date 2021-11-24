@@ -62,8 +62,12 @@ class KategoriController extends Controller
 
     public function destroy(Kategori $kategori)
     {
-        $kategori->delete();
+        if (count($kategori->buku) > 0) {
+            return response()->json(['failed' => 'Data gagal dihapus!, silahkan hapus data buku dahulu']);
+        } else {
+            $kategori->delete();
 
-        return response()->json(['success' => 'Data berhasil dihapus!']);
+            return response()->json(['success' => 'Data berhasil dihapus!']);
+        }
     }
 }

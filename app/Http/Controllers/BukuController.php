@@ -91,8 +91,12 @@ class BukuController extends Controller
 
     public function destroy(Buku $buku)
     {
-        $buku->delete();
+        if (count($buku->peminjaman) > 0) {
+            return response()->json(['failed' => 'Data gagal dihapus!, silahkan hapus data peminjaman dahulu']);
+        } else {
+            $buku->delete();
 
-        return response()->json(['success' => 'Data berhasil dihapus!']);
+            return response()->json(['success' => 'Data berhasil dihapus!']);
+        }
     }
 }

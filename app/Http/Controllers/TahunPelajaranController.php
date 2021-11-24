@@ -62,8 +62,12 @@ class TahunPelajaranController extends Controller
 
     public function destroy(TahunPelajaran $tahun_pelajaran)
     {
-        $tahun_pelajaran->delete();
+        if (count($tahun_pelajaran->peminjaman) > 0) {
+            return response()->json(['failed' => 'Data gagal dihapus!, silahkan hapus data peminjaman dahulu']);
+        } else {
+            $tahun_pelajaran->delete();
 
-        return response()->json(['success' => 'Data berhasil dihapus!']);
+            return response()->json(['success' => 'Data berhasil dihapus!']);
+        }
     }
 }

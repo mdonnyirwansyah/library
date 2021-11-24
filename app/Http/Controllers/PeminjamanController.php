@@ -123,7 +123,7 @@ class PeminjamanController extends Controller
 
     public function destroy(Peminjaman $peminjaman)
     {
-        if ($peminjaman->pengembalian) {
+        if (count($peminjaman->pengembalian) > 0) {
             return response()->json(['failed' => 'Data gagal dihapus!, silahkan hapus data pengembalian dahulu']);
         } else {
             DB::transaction(function() use ($peminjaman) {

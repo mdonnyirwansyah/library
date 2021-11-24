@@ -90,8 +90,12 @@ class AnggotaController extends Controller
 
     public function destroy(Anggota $anggota)
     {
-        $anggota->delete();
+        if (count($anggota->peminjaman) > 0) {
+            return response()->json(['failed' => 'Data gagal dihapus!, silahkan hapus data peminjaman dahulu']);
+        } else {
+            $anggota->delete();
 
-        return response()->json(['success' => 'Data berhasil dihapus!']);
+            return response()->json(['success' => 'Data berhasil dihapus!']);
+        }
     }
 }

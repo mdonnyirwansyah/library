@@ -16,7 +16,7 @@ class CreatePengembaliansTable extends Migration
         Schema::create('pengembalian', function (Blueprint $table) {
             $table->id('id');
             $table->string('kode');
-            $table->foreignId('peminjaman_id')->constrained('peminjaman', 'id')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('peminjaman_id')->constrained('peminjaman', 'id')->onUpdate('cascade')->onDelete('restrict');
             $table->timestamps();
         });
     }

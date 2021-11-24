@@ -17,4 +17,9 @@ class Anggota extends Model
     {
         return $this->belongsTo(Kelas::class);
     }
+
+    public function peminjaman()
+    {
+        return $this->hasMany(Peminjaman::class);
+    }
 }

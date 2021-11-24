@@ -17,7 +17,7 @@ class CreateAnggotasTable extends Migration
             $table->id();
             $table->string('nis');
             $table->string('nama');
-            $table->foreignId('kelas_id')->constrained('kelas', 'id')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('kelas_id')->constrained('kelas', 'id')->onUpdate('cascade')->onDelete('restrict');
             $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan']);
             $table->string('slug');
             $table->timestamps();

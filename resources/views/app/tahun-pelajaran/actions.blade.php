@@ -16,8 +16,12 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function (response) {
-                        $('#tahunpelajaran-table').DataTable().draw();
-                        toastr.success(response.success, 'Selamat,');
+                        if (response.success) {
+                            $('#tahunpelajaran-table').DataTable().draw();
+                            toastr.success(response.success, 'Selamat,');
+                        } else {
+                            swal(response.failed);
+                        }
                     },
                 });
             } else {

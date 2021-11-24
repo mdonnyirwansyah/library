@@ -10,7 +10,6 @@ use App\Models\Peminjaman;
 use App\Models\Pengembalian;
 use App\Models\TahunPelajaran;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 use PDF;
@@ -103,11 +102,11 @@ class LaporanController extends Controller
 
     public function getPeminjaman(Request $request)
     {
-        if ($request->kelas || $request->tahun_pelajaran_id) {
+        if ($request->kelas || $request->tahun_pelajaran) {
             $peminjaman = Peminjaman::whereRelation(
-                'anggota', 'kelas', $request->kelas
+                'anggota', 'kelas_id', $request->kelas
             )
-            ->where('tahun_pelajaran_id', $request->tahun_pelajaran_id)
+            ->where('tahun_pelajaran_id', $request->tahun_pelajaran)
             ->get();
         } else {
             $peminjaman = Peminjaman::all();
@@ -139,6 +138,27 @@ class LaporanController extends Controller
         ->make(true);
     }
 
+    public function printPeminjaman(Request $request)
+    {
+        Validator::make($request->all(), [
+            'kelas' => 'required',
+            'tahun_pelajaran' => 'required'
+        ])->validate();
+
+        $kelas = Kelas::find($request->kelas);
+        $tahun_pelajaran = TahunPelajaran::find($request->tahun_pelajaran);
+        $peminjaman = Peminjaman::whereRelation(
+            'anggota', 'kelas_id', $request->kelas
+        )
+        ->where('tahun_pelajaran_id', $request->tahun_pelajaran)
+        ->get();
+
+        $pdf = PDF::loadView('app.laporan.print-peminjaman', compact('kelas', 'tahun_pelajaran', 'peminjaman'))
+        ->setPaper('a4', 'landscape');
+
+        return $pdf->download('laporan-peminjaman-perpustakaan-'.$kelas->kelas.'-tahun_'.$tahun_pelajaran->tahun.'.pdf');
+    }
+
     public function pengembalian()
     {
         $kelas = Kelas::all();
@@ -149,14 +169,14 @@ class LaporanController extends Controller
 
     public function getPengembalian(Request $request)
     {
-        if ($request->kelas || $request->tahun_pelajaran_id) {
+        if ($request->kelas || $request->tahun_pelajaran) {
             $pengembalian = Pengembalian::whereRelation(
                 'peminjaman', function ($query) use ($request) {
                     $query->whereRelation('anggota', 'kelas_id', $request->kelas);
                 }
             )
             ->whereRelation(
-                'peminjaman', 'tahun_pelajaran_id', $request->tahun_pelajaran_id
+                'peminjaman', 'tahun_pelajaran_id', $request->tahun_pelajaran
             )
             ->get();
         } else {
@@ -206,5 +226,30 @@ class LaporanController extends Controller
             return $pengembalian->created_at->format('Y-m-d');
         })
         ->make(true);
+    }
+
+    public function printPengembalian(Request $request)
+    {
+        Validator::make($request->all(), [
+            'kelas' => 'required',
+            'tahun_pelajaran' => 'required'
+        ])->validate();
+
+        $kelas = Kelas::find($request->kelas);
+        $tahun_pelajaran = TahunPelajaran::find($request->tahun_pelajaran);
+        $pengembalian = Pengembalian::whereRelation(
+            'peminjaman', function ($query) use ($request) {
+                $query->whereRelation('anggota', 'kelas_id', $request->kelas);
+            }
+        )
+        ->whereRelation(
+            'peminjaman', 'tahun_pelajaran_id', $request->tahun_pelajaran
+        )
+        ->get();
+
+        $pdf = PDF::loadView('app.laporan.print-pengembalian', compact('kelas', 'tahun_pelajaran', 'pengembalian'))
+        ->setPaper('a4', 'landscape');
+
+        return $pdf->download('laporan-pengembalian-perpustakaan-'.$kelas->kelas.'-tahun_'.$tahun_pelajaran->tahun.'.pdf');
     }
 }

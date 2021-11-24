@@ -103,8 +103,10 @@ Route::middleware(['auth'])->group(function () {
         Route::post('print-buku', [LaporanController::class, 'printBuku'])->name('print-buku');
         Route::get('peminjaman', [LaporanController::class, 'peminjaman'])->name('peminjaman');
         Route::post('get-peminjaman', [LaporanController::class, 'getPeminjaman'])->name('get-peminjaman');
+        Route::post('print-peminjaman', [LaporanController::class, 'printPeminjaman'])->name('print-peminjaman');
         Route::get('pengembalian', [LaporanController::class, 'pengembalian'])->name('pengembalian');
         Route::post('get-pengembalian', [LaporanController::class, 'getPengembalian'])->name('get-pengembalian');
+        Route::post('print-pengembalian', [LaporanController::class, 'printPengembalian'])->name('print-pengembalian');
     });
 
     Route::middleware(['auth.isAdministrator'])->prefix('users')->name('users.')->group(function () {

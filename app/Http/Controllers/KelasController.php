@@ -62,8 +62,12 @@ class KelasController extends Controller
 
     public function destroy(Kelas $kelas)
     {
-        $kelas->delete();
+        if (count($kelas->anggota) > 0) {
+            return response()->json(['failed' => 'Data gagal dihapus!, silahkan hapus data anggota dahulu']);
+        } else {
+            $kelas->delete();
 
-        return response()->json(['success' => 'Data berhasil dihapus!']);
+            return response()->json(['success' => 'Data berhasil dihapus!']);
+        }
     }
 }

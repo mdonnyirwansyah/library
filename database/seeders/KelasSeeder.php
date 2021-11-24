@@ -18,7 +18,8 @@ class KelasSeeder extends Seeder
         $kelas = collect([
             'X MIPA 1',
             'XI MIPA 1',
-            'XII MIPA 1'
+            'XII MIPA 1',
+            'XII MIPA 2'
         ]);
 
         $kelas->each( function ($item) {

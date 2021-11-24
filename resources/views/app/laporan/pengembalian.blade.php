@@ -5,12 +5,12 @@
 @push('javascript')
 <script>
     $(document).ready( function() {
-        $('#kelas_id').select2({
+        $('#kelas').select2({
             theme: 'bootstrap4',
             placeholder: 'Pilih kelas',
         });
 
-        $('#tahun_pelajaran_id').select2({
+        $('#tahun_pelajaran').select2({
             theme: 'bootstrap4',
             placeholder: 'Pilih tahun pelajaran',
         });
@@ -27,8 +27,8 @@
                 url: "{{ route('laporan.get-pengembalian') }}",
                 type: "POST",
                 data: function (d) {
-                    d.kelas_id = $('#kelas_id').val();
-                    d.tahun_pelajaran_id = $('#tahun_pelajaran_id').val();
+                    d.kelas = $('#kelas').val();
+                    d.tahun_pelajaran = $('#tahun_pelajaran').val();
                 },
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -73,29 +73,42 @@
       </div>
       <div class="card-body">
         <div class="col-12">
-            <div class="row">
-                <div class="form-group col-md-4">
-                    <label for="kelas_id">Kelas</label>
-                    <select class="form-control select2 filter" style="width: 100%" name="kelas_id" id="kelas_id">
-                        <option value="" selected>Pilih kelas</option>
-                        @foreach ($kelas as $item)
-                        <option value="{{ $item->id }}" >{{ $item->kelas }}</option>
-                        @endforeach
-                    </select>
+            <form action="{{ route('laporan.print-pengembalian') }}" method="post">
+                @csrf
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label for="kelas">Kelas</label>
+                        <select class="form-control select2 filter @error('kelas') is-invalid @enderror" style="width: 100%" name="kelas" id="kelas">
+                            <option value="" selected>Pilih kelas</option>
+                            @foreach ($kelas as $item)
+                            <option value="{{ $item->id }}" >{{ $item->kelas }}</option>
+                            @endforeach
+                        </select>
+                        @error('kelas')
+                            <span class="invalid-feedback" role="alert">
+                                <small>{{ $message }}</small>
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="tahun_pelajaran">Tahun Pelajaran</label>
+                        <select class="form-control select2 filter @error('tahun_pelajaran') is-invalid @enderror" style="width: 100%" name="tahun_pelajaran" id="tahun_pelajaran">
+                            <option value="" selected>Pilih tahun pelajaran</option>
+                            @foreach ($tahun_pelajaran as $item)
+                            <option value="{{ $item->id }}" >{{ $item->tahun }}</option>
+                            @endforeach
+                        </select>
+                        @error('tahun_pelajaran')
+                            <span class="invalid-feedback" role="alert">
+                                <small>{{ $message }}</small>
+                            </span>
+                        @enderror
+                    </div>
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="tahun_pelajaran_id">Tahun Pelajaran</label>
-                    <select class="form-control select2 filter" style="width: 100%" name="tahun_pelajaran_id" id="tahun_pelajaran_id">
-                        <option value="" selected>Pilih tahun pelajaran</option>
-                        @foreach ($tahun_pelajaran as $item)
-                        <option value="{{ $item->id }}" >{{ $item->tahun }}</option>
-                        @endforeach
-                    </select>
+                <div class="mb-2">
+                    <button class="btn btn-primary">Cetak</button>
                 </div>
-            </div>
-            <div class="mb-2">
-              <a href="#" class="btn btn-primary">Cetak</a>
-            </div>
+            </form>
         </div>
       </div>
     </div>

@@ -17,7 +17,7 @@ class CreateBukusTable extends Migration
             $table->id();
             $table->string('kode');
             $table->string('judul');
-            $table->foreignId('kategori_id')->constrained('kategori', 'id')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('kategori_id')->constrained('kategori', 'id')->onDelete('restrict')->onUpdate('cascade');
             $table->string('pengarang');
             $table->string('penerbit');
             $table->integer('tahun');
