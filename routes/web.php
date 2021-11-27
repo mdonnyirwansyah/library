@@ -48,6 +48,7 @@ Route::middleware(['auth'])->group(function () {
         Route::middleware(['auth.isAdministrator'])->group(function () {
             Route::get('', [AnggotaController::class, 'index'])->name('index');
             Route::get('create', [AnggotaController::class, 'create'])->name('create');
+            Route::get('import', [AnggotaController::class, 'import'])->name('import');
             Route::post('', [AnggotaController::class, 'store'])->name('store');
             Route::get('edit/{anggota:slug}', [AnggotaController::class, 'edit'])->name('edit');
             Route::put('{anggota:slug}', [AnggotaController::class, 'update'])->name('update');
@@ -68,6 +69,7 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['auth.isAdministrator'])->prefix('buku')->name('buku.')->group(function () {
         Route::get('', [BukuController::class, 'index'])->name('index');
         Route::get('create', [BukuController::class, 'create'])->name('create');
+        Route::get('import', [BukuController::class, 'import'])->name('import');
         Route::post('', [BukuController::class, 'store'])->name('store');
         Route::get('edit/{buku:slug}', [BukuController::class, 'edit'])->name('edit');
         Route::put('{buku:slug}', [BukuController::class, 'update'])->name('update');

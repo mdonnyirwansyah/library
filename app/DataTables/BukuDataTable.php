@@ -20,7 +20,11 @@ class BukuDataTable extends DataTable
             ->eloquent($query)
             ->addIndexColumn()
             ->addColumn('kategori', function ($data) {
-                return $data->kategori->nama;
+                if ($data->kategori_id) {
+                    return $data->kategori->kategori;
+                } else {
+                    return '-';
+                }
             })
             ->addColumn('action', function ($data) {
                 return '

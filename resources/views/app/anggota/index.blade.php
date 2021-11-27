@@ -24,6 +24,7 @@
         <div class="col-12">
           <div class="section-header-button mb-3">
             <a href="{{ route('anggota.create') }}" class="btn btn-primary">Tambah</a>
+            <a href="{{ route('anggota.import') }}" class="btn btn-success">Import</a>
           </div>
           <hr>
           {!! $dataTable->table(['class' => 'table table-bordered table-striped dt-responsive nowrap', 'cellpadding' => '0', 'style' => 'width: 100%']) !!}

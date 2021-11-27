@@ -33,7 +33,7 @@
 
     <li class="{{ request()->is('kategori*') ? 'active' : '' }}">
       <a class="nav-link" href="{{ route('kategori.index') }}">
-        <i class="fas fa-tags"></i> <span>Kategori</span>
+        <i class="fas fa-tags"></i> <span>Kategori Buku</span>
       </a>
     </li>
 

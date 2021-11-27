@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Tambah Buku')
+@section('title', 'Import Anggota')
 
 @push('javascript')
 <script>
@@ -16,11 +16,6 @@
     }
 
     $(document).ready( function() {
-        $('.select2').select2({
-            theme: 'bootstrap4',
-            placeholder: 'Pilih kategori',
-        });
-
         $('#form-action').submit(function (e) {
             e.preventDefault();
             $('#btn').attr('disabled', true);
@@ -41,7 +36,7 @@
 
                         async function redirect() {
                         let promise = new Promise(function(resolve, reject) {
-                            setTimeout(function() { resolve('{{ route("buku.index") }}'); }, 3000);
+                            setTimeout(function() { resolve('{{ route("anggota.index") }}'); }, 3000);
                         });
                         window.location.href = await promise;
                         }
@@ -65,19 +60,19 @@
 <section class="section">
     <div class="section-header">
         <div class="section-header-back">
-            <a href="{{ route('buku.index') }}" class="btn btn-icon">
+            <a href="{{ route('anggota.index') }}" class="btn btn-icon">
                 <i class="fas fa-arrow-left"></i>
             </a>
         </div>
-        <h1>Tambah Buku</h1>
+        <h1>Import Anggota</h1>
         <div class="section-header-breadcrumb">
             <div class="breadcrumb-item active">
                 <a href="{{ route('dashboard') }}">Dashboard</a>
             </div>
             <div class="breadcrumb-item">
-                <a href="{{ route('buku.index') }}">Buku</a>
+                <a href="{{ route('anggota.index') }}">Anggota</a>
             </div>
-            <div class="breadcrumb-item">Tambah Buku</div>
+            <div class="breadcrumb-item">Import Anggota</div>
         </div>
     </div>
 
@@ -86,8 +81,22 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('buku.store') }}" id="form-action" enctype="multipart/form-data">
-                            @include('app.buku.partials.form')
+                        <form action="{{ route('anggota.store') }}" id="form-action" enctype="multipart/form-data">
+                            <input type="hidden" name="import" value="1">
+                            <div class="form-group row mb-4">
+                                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3" for="file">File</label>
+                                <div class="col-sm-12 col-md-7">
+                                  <input type="file" name="file" id="file">
+                                  <small class="invalid-feedback file_err"></small>
+                                </div>
+                            </div>
+
+                            <div class="form-group row mb-4">
+                              <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
+                              <div class="col-sm-12 col-md-7">
+                                <button class="btn btn-primary" id="btn">Submit</button>
+                              </div>
+                            </div>
                         </form>
                     </div>
                 </div>

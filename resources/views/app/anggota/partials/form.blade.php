@@ -34,6 +34,9 @@
     <div class="col-sm-12 col-md-7">
       <select class="form-control select2" style="width: 100%" name="kelas" id="kelas">
         @isset($anggota)
+        @if ($anggota->kelas_id === null)
+            <option value="" selected>Pilih kelas</option>
+        @endif
         @else
         <option value="" selected>Pilih kelas</option>
         @endisset

@@ -74,7 +74,7 @@
                         <select class="form-control select2 filter @error('kategori') is-invalid @enderror" style="width: 100%" name="kategori" id="kategori">
                             <option value="" selected>Pilih kategori</option>
                             @foreach ($kategori as $item)
-                            <option value="{{ $item->id }}" >{{ $item->nama }}</option>
+                            <option value="{{ $item->id }}" >{{ $item->kategori }}</option>
                             @endforeach
                         </select>
                         @error('kategori')

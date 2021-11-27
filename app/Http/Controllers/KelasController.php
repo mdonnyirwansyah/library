@@ -23,13 +23,13 @@ class KelasController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'nama' => 'required|unique:kelas',
+            'kelas' => 'required|unique:kelas',
         ]);
 
         if ($validator->passes()) {
             $kelas = new Kelas();
-            $kelas->nama = $request->nama;
-            $kelas->slug = Str::slug($request->nama);
+            $kelas->kelas = $request->kelas;
+            $kelas->slug = Str::slug($request->kelas);
             $kelas->save();
 
             return response()->json(['success' => 'Data baru berhasil ditambah!']);
@@ -46,12 +46,12 @@ class KelasController extends Controller
     public function update(Request $request, Kelas $kelas)
     {
         $validator = Validator::make($request->all(), [
-            'nama' => 'required|unique:kelas,nama,' .$kelas->id,
+            'kelas' => 'required|unique:kelas,kelas,' .$kelas->id,
         ]);
 
         if ($validator->passes()) {
-            $kelas->nama = $request->nama;
-            $kelas->slug = Str::slug($request->nama);
+            $kelas->kelas = $request->kelas;
+            $kelas->slug = Str::slug($request->kelas);
             $kelas->save();
 
             return response()->json(['success' => 'Data berhasil diperbarui!']);

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Edit Kategori')
+@section('title', 'Edit Kategori Buku')
 
 @push('javascript')
 <script>
@@ -65,15 +65,15 @@
                 <i class="fas fa-arrow-left"></i>
             </a>
         </div>
-        <h1>Edit Kategori</h1>
+        <h1>Edit Kategori Buku</h1>
         <div class="section-header-breadcrumb">
             <div class="breadcrumb-item active">
                 <a href="{{ route('dashboard') }}">Dashboard</a>
             </div>
             <div class="breadcrumb-item">
-                <a href="{{ route('kategori.index') }}">Kategori</a>
+                <a href="{{ route('kategori.index') }}">Kategori Buku</a>
             </div>
-            <div class="breadcrumb-item">Edit Kategori</div>
+            <div class="breadcrumb-item">Edit Kategori Buku</div>
         </div>
     </div>
 

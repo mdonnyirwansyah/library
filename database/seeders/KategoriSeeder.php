@@ -23,7 +23,7 @@ class KategoriSeeder extends Seeder
 
         $kategori->each( function ($item) {
             Kategori::create([
-                'nama' => $item,
+                'kategori' => $item,
                 'slug' => Str::slug($item)
             ]);
         });

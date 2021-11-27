@@ -23,13 +23,13 @@ class KategoriController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'nama' => 'required|unique:kategori',
+            'kategori' => 'required|unique:kategori',
         ]);
 
         if ($validator->passes()) {
             $kategori = new Kategori();
-            $kategori->nama = $request->nama;
-            $kategori->slug = Str::slug($request->nama);
+            $kategori->kategori = $request->kategori;
+            $kategori->slug = Str::slug($request->kategori);
             $kategori->save();
 
             return response()->json(['success' => 'Data baru berhasil ditambah!']);
@@ -46,12 +46,12 @@ class KategoriController extends Controller
     public function update(Request $request, Kategori $kategori)
     {
         $validator = Validator::make($request->all(), [
-            'nama' => 'required|unique:kategori,nama,' .$kategori->id,
+            'kategori' => 'required|unique:kategori,kategori,' .$kategori->id,
         ]);
 
         if ($validator->passes()) {
-            $kategori->nama = $request->nama;
-            $kategori->slug = Str::slug($request->nama);
+            $kategori->kategori = $request->kategori;
+            $kategori->slug = Str::slug($request->kategori);
             $kategori->save();
 
             return response()->json(['success' => 'Data berhasil diperbarui!']);

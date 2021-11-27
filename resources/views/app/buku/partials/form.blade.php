@@ -2,7 +2,7 @@
   <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3" for="kode">Kode</label>
   <div class="col-sm-12 col-md-7">
       <input type="text" class="form-control" name="kode" id="kode" @isset($buku) value="{{ $buku->kode }}" @endisset />
-      <small class="invalid-feedback nis_err"></small>
+      <small class="invalid-feedback kode_err"></small>
   </div>
 </div>
 
@@ -19,11 +19,14 @@
     <div class="col-sm-12 col-md-7">
       <select class="form-control select2" style="width: 100%" name="kategori_id" id="kategori_id">
         @isset($buku)
+        @if ($buku->kategori_id === null)
+            <option value="" selected>Pilih kategori</option>
+        @endif
         @else
-        <option value="" selected>Pilih Kategori</option>
+        <option value="" selected>Pilih kategori</option>
         @endisset
         @foreach ($kategori as $item)
-        <option value="{{ $item->id }}" @isset($buku) @if ($buku->kategori_id == $item->id) selected @endif @endisset>{{ $item->nama }}</option>
+        <option value="{{ $item->id }}" @isset($buku) @if ($buku->kategori_id == $item->id) selected @endif @endisset>{{ $item->kategori }}</option>
         @endforeach
       </select>
       <small class="invalid-feedback kategori_id_err"></small>

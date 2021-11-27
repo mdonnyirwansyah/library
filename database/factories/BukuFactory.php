@@ -25,7 +25,7 @@ class BukuFactory extends Factory
         $judul = $this->faker->colorName();
 
         return [
-            'kode' => $this->faker->isbn10(),
+            'kode' => $this->faker->unique()->isbn10(),
             'judul' => $judul,
             'kategori_id' => $this->faker->randomElement([1, 2, 3]),
             'pengarang' => $this->faker->name(),

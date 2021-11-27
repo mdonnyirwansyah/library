@@ -66,7 +66,7 @@ class KategoriDataTable extends DataTable
     {
         return [
             Column::make('DT_RowIndex')->searchable(false)->title('No')->width(50),
-            Column::make('nama'),
+            Column::make('kategori'),
             Column::computed('action')->title('Aksi')->width(85),
         ];
     }

@@ -25,7 +25,7 @@ class AnggotaFactory extends Factory
         $nama = $this->faker->name();
 
         return [
-            'nis' => $this->faker->ean8(),
+            'nis' => $this->faker->unique()->ean8(),
             'nama' => $nama,
             'jenis_kelamin' => $this->faker->randomElement(['Laki-laki', 'Perempuan']),
             'kelas_id' => $this->faker->randomElement([1, 2, 3]),

@@ -72,7 +72,7 @@ class LaporanController extends Controller
         return DataTables::of($buku)
         ->addIndexColumn()
         ->addColumn('kategori', function ($buku) {
-            return $buku->kategori->nama;
+            return $buku->kategori->kategori;
         })
         ->make(true);
     }

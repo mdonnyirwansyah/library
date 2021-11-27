@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Kategori')
+@section('title', 'Kategori Buku')
 
 @push('javascript')
   {!! $dataTable->scripts() !!}
@@ -10,12 +10,12 @@
 @section('content')
 <section class="section">
   <div class="section-header">
-    <h1>Kategori</h1>
+    <h1>Kategori Buku</h1>
     <div class="section-header-breadcrumb">
       <div class="breadcrumb-item active">
         <a href="{{ route('dashboard') }}">Dashboard</a>
       </div>
-      <div class="breadcrumb-item">Kategori</div>
+      <div class="breadcrumb-item">Kategori Buku</div>
     </div>
   </div>
   <div class="section-body">

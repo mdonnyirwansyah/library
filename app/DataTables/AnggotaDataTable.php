@@ -20,7 +20,11 @@ class AnggotaDataTable extends DataTable
             ->eloquent($query)
             ->addIndexColumn()
             ->addColumn('kelas', function ($data) {
-                return $data->kelas->kelas;
+                if ($data->kelas_id) {
+                    return $data->kelas->kelas;
+                } else {
+                    return '-';
+                }
             })
             ->addColumn('action', function ($data) {
                 return '

@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\AnggotaDataTable;
+use App\Imports\AnggotaImport;
 use App\Models\Anggota;
 use App\Models\Kelas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AnggotaController extends Controller
 {
@@ -23,28 +25,47 @@ class AnggotaController extends Controller
         return view('app.anggota.create', compact('kelas'));
     }
 
+    public function import()
+    {
+        return view('app.anggota.import');
+    }
+
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'nis' => 'required|unique:anggota',
-            'nama' => 'required',
-            'jenis_kelamin' => 'required',
-            'kelas' => 'required',
-        ]);
+        if ($request->import) {
+            $validator = Validator::make($request->all(), [
+                'file' => 'required',
+            ]);
 
-        if ($validator->passes()) {
-            $anggota = new Anggota();
-            $anggota->nis = $request->nis;
-            $anggota->nama = $request->nama;
-            $anggota->jenis_kelamin= $request->jenis_kelamin;
-            $anggota->kelas_id = $request->kelas;
-            $anggota->slug = Str::slug($request->nama);
-            $anggota->save();
+            if ($validator->passes()) {
+                Excel::import(new AnggotaImport(), $request->file('file'));
 
-            return response()->json(['success' => 'Data baru berhasil ditambah!']);
+                return response()->json(['success' => 'Data baru berhasil diimport!']);
+            }
+
+            return response()->json(['error' => $validator->errors()]);
+        } else {
+            $validator = Validator::make($request->all(), [
+                'nis' => 'required|unique:anggota',
+                'nama' => 'required',
+                'jenis_kelamin' => 'required',
+                'kelas' => 'required',
+            ]);
+
+            if ($validator->passes()) {
+                $anggota = new Anggota();
+                $anggota->nis = $request->nis;
+                $anggota->nama = $request->nama;
+                $anggota->jenis_kelamin= $request->jenis_kelamin;
+                $anggota->kelas_id = $request->kelas;
+                $anggota->slug = Str::slug($request->nama);
+                $anggota->save();
+
+                return response()->json(['success' => 'Data baru berhasil ditambah!']);
+            }
+
+            return response()->json(['error' => $validator->errors()]);
         }
-
-        return response()->json(['error' => $validator->errors()]);
     }
 
     public function find(Request $request)

@@ -15,9 +15,9 @@ class CreateAnggotasTable extends Migration
     {
         Schema::create('anggota', function (Blueprint $table) {
             $table->id();
-            $table->string('nis');
+            $table->string('nis')->unique();
             $table->string('nama');
-            $table->foreignId('kelas_id')->constrained('kelas', 'id')->onUpdate('cascade')->onDelete('restrict');
+            $table->foreignId('kelas_id')->nullable()->constrained('kelas', 'id')->onUpdate('cascade')->onDelete('restrict');
             $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan']);
             $table->string('slug');
             $table->timestamps();

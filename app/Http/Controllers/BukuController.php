@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\BukuDataTable;
+use App\Imports\BukuImport;
 use App\Models\Buku;
 use App\Models\Kategori;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
 
 class BukuController extends Controller
 {
@@ -23,34 +25,53 @@ class BukuController extends Controller
         return view('app.buku.create', compact('kategori'));
     }
 
+    public function import()
+    {
+        return view('app.buku.import');
+    }
+
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'kode' => 'required|unique:buku',
-            'judul' => 'required',
-            'kategori_id' => 'required',
-            'pengarang' => 'required',
-            'penerbit' => 'required',
-            'tahun' => 'required',
-            'stok' => 'required',
-        ]);
+        if ($request->import) {
+            $validator = Validator::make($request->all(), [
+                'file' => 'required',
+            ]);
 
-        if ($validator->passes()) {
-            $buku = new Buku();
-            $buku->kode = $request->kode;
-            $buku->judul = $request->judul;
-            $buku->kategori_id = $request->kategori_id;
-            $buku->pengarang = $request->pengarang;
-            $buku->penerbit = $request->penerbit;
-            $buku->tahun = $request->tahun;
-            $buku->stok = $request->stok;
-            $buku->slug = Str::slug($request->judul);
-            $buku->save();
+            if ($validator->passes()) {
+                Excel::import(new BukuImport(), $request->file('file'));
 
-            return response()->json(['success' => 'Data baru berhasil ditambah!']);
+                return response()->json(['success' => 'Data baru berhasil diimport!']);
+            }
+
+            return response()->json(['error' => $validator->errors()]);
+        } else {
+            $validator = Validator::make($request->all(), [
+                'kode' => 'required|unique:buku',
+                'judul' => 'required',
+                'kategori_id' => 'required',
+                'pengarang' => 'required',
+                'penerbit' => 'required',
+                'tahun' => 'required',
+                'stok' => 'required',
+            ]);
+
+            if ($validator->passes()) {
+                $buku = new Buku();
+                $buku->kode = $request->kode;
+                $buku->judul = $request->judul;
+                $buku->kategori_id = $request->kategori_id;
+                $buku->pengarang = $request->pengarang;
+                $buku->penerbit = $request->penerbit;
+                $buku->tahun = $request->tahun;
+                $buku->stok = $request->stok;
+                $buku->slug = Str::slug($request->judul);
+                $buku->save();
+
+                return response()->json(['success' => 'Data baru berhasil ditambah!']);
+            }
+
+            return response()->json(['error' => $validator->errors()]);
         }
-
-        return response()->json(['error' => $validator->errors()]);
     }
 
     public function edit(Buku $buku)
