@@ -29,7 +29,7 @@
       <div class="col-md-4">
         <div class="card">
           <div class="card-header">
-            <h4 class="text-dark">Profil</h4>
+            <h4 class="text-dark">Akun</h4>
           </div>
           <div class="card-body">
             <ul class="nav nav-pills flex-column">

@@ -16,10 +16,7 @@
     <div class="dropdown-menu dropdown-menu-right">
       <div class="dropdown-title">Selamat Datang, {{ Auth::user()->name }}</div>
       <a href="{{ route('user-profile-information') }}" class="dropdown-item has-icon">
-        <i class="far fa-user"></i> Informasi Profil
-      </a>
-      <a href="{{ route('user-password') }}" class="dropdown-item has-icon">
-        <i class="fas fa-lock"></i> Update Password
+        <i class="far fa-user"></i> Akun
       </a>
       <div class="dropdown-divider"></div>
       <a class="dropdown-item has-icon text-danger" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

@@ -121,7 +121,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('delete-checked', [UserController::class, 'destroyChecked'])->name('destroy.checked');
     });
 
-    Route::prefix('user')->name('user-')->group(function () {
+    Route::prefix('account')->name('user-')->group(function () {
         Route::get('profile-information', function () {
             return view('app.user.profile-information');
         })->name('profile-information');
