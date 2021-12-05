@@ -40,7 +40,7 @@
         <div>
             <div class="header">
                 <h3><b>Laporan Anggota Perpustakaan</b></h3>
-                <h3><b>SMAN 1 Bagan Sinembah</b></h3>
+                <h3><b>SMAN 1 Bagan Senembah</b></h3>
                 <h3><b>Kelas {{ $kelas->kelas }}</b></h3>
             </div>
 

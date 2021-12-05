@@ -21,7 +21,7 @@ class PeminjamanController extends Controller
     public function create()
     {
         $tahun_pelajaran = TahunPelajaran::all();
-        $buku = Buku::all();
+        $buku = Buku::where('stok', '>', 0)->get();
 
         return view('app.peminjaman.create', compact('tahun_pelajaran', 'buku'));
     }
@@ -64,13 +64,13 @@ class PeminjamanController extends Controller
     {
         $peminjaman = Peminjaman::where('kode', $request->kode)->first();
 
-        $route = route('peminjaman.show', $peminjaman->id);
-
         if ($peminjaman) {
+            $route = route('peminjaman.show', $peminjaman->id);
+
             return response()->json(['success' => $peminjaman->anggota->nama, 'route' => $route]);
         }
 
-        return response()->json(['error' => 'ID Peminjaman tidak ditemukan!']);
+        return response()->json(['error' => 'Kode Peminjaman tidak ditemukan!']);
     }
 
     public function show(Peminjaman $peminjaman)

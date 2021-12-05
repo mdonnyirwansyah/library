@@ -39,7 +39,7 @@
     <body>
         <div>
             <div class="header">
-                <h3><b>Laporan Pengembalian Buku SMAN 1 Bagan Sinembah</b></h3>
+                <h3><b>Laporan Pengembalian Buku SMAN 1 Bagan Senembah</b></h3>
                 <h3><b>Tahun Pelajaran {{ $tahun_pelajaran->tahun }}</b></h3>
                 <h3><b>Kelas {{ $kelas->kelas }}</b></h3>
             </div>

@@ -65,7 +65,7 @@
                 <i class="fas fa-arrow-left"></i>
             </a>
         </div>
-        <h1>Edit kelas</h1>
+        <h1>Edit Kelas</h1>
         <div class="section-header-breadcrumb">
             <div class="breadcrumb-item active">
                 <a href="{{ route('dashboard') }}">Dashboard</a>
