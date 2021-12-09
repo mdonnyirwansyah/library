@@ -41,8 +41,9 @@
                 {data: 'pengarang', name: 'pengarang'},
                 {data: 'penerbit', name: 'penerbit'},
                 {data: 'tahun', name: 'tahun'},
-                {data: 'stok', name: 'stok'},
-            ]
+                {data: 'stok', name: 'stok'}
+            ],
+            order: [[3, 'asc']]
         });
     });
 </script>

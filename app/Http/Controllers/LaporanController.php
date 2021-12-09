@@ -46,12 +46,12 @@ class LaporanController extends Controller
         ])->validate();
 
         $kelas = Kelas::find($request->kelas);
-        $anggota = Anggota::where('kelas_id', $request->kelas)->get();
+        $anggota = Anggota::where('kelas_id', $request->kelas)->orderBy('nama', 'ASC')->get();
 
         $pdf = PDF::loadView('app.laporan.print-anggota', compact('kelas', 'anggota'))
         ->setPaper('a4', 'portrait');
 
-        return $pdf->download('laporan-anggota-perpustakaan-'.$kelas->kelas.'.pdf');
+        return $pdf->stream('laporan-anggota-perpustakaan-'.$kelas->kelas.'.pdf');
     }
 
     public function buku()
@@ -84,12 +84,12 @@ class LaporanController extends Controller
         ])->validate();
 
         $kategori = Kategori::find($request->kategori);
-        $buku = Buku::where('kategori_id', $request->kategori)->get();
+        $buku = Buku::where('kategori_id', $request->kategori)->orderBy('judul', 'ASC')->get();
 
         $pdf = PDF::loadView('app.laporan.print-buku', compact('kategori', 'buku'))
         ->setPaper('a4', 'landscape');
 
-        return $pdf->download('laporan-buku-perpustakaan-'.$kategori->nama.'.pdf');
+        return $pdf->stream('laporan-buku-perpustakaan-'.$kategori->nama.'.pdf');
     }
 
     public function peminjaman()
@@ -156,7 +156,7 @@ class LaporanController extends Controller
         $pdf = PDF::loadView('app.laporan.print-peminjaman', compact('kelas', 'tahun_pelajaran', 'peminjaman'))
         ->setPaper('a4', 'landscape');
 
-        return $pdf->download('laporan-peminjaman-perpustakaan-'.$kelas->kelas.'-tahun_'.$tahun_pelajaran->tahun.'.pdf');
+        return $pdf->stream('laporan-peminjaman-perpustakaan-'.$kelas->kelas.'-tahun_'.$tahun_pelajaran->tahun.'.pdf');
     }
 
     public function pengembalian()
@@ -250,6 +250,6 @@ class LaporanController extends Controller
         $pdf = PDF::loadView('app.laporan.print-pengembalian', compact('kelas', 'tahun_pelajaran', 'pengembalian'))
         ->setPaper('a4', 'landscape');
 
-        return $pdf->download('laporan-pengembalian-perpustakaan-'.$kelas->kelas.'-tahun_'.$tahun_pelajaran->tahun.'.pdf');
+        return $pdf->stream('laporan-pengembalian-perpustakaan-'.$kelas->kelas.'-tahun_'.$tahun_pelajaran->tahun.'.pdf');
     }
 }

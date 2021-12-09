@@ -16,11 +16,11 @@
     <div class="col-sm-12 col-md-7">
         <div class="custom-control custom-radio custom-control-inline mt-1">
             <input type="radio" id="{{ $item->judul.'1' }}" name="pengembalian[buku][{{ $item->id }}][status]" class="custom-control-input" value="1" @if ($item->pivot->status == 1) checked @endif>
-            <label class="custom-control-label" for="{{ $item->judul.'1' }}">Ya</label>
+            <label class="custom-control-label" for="{{ $item->judul.'1' }}">Sudah</label>
         </div>
         <div class="custom-control custom-radio custom-control-inline">
             <input type="radio" id="{{ $item->judul.'0' }}" name="pengembalian[buku][{{ $item->id }}][status]" class="custom-control-input" value="0" @if ($item->pivot->status == 0) checked @endif>
-            <label class="custom-control-label" for="{{ $item->judul.'0' }}">Tidak</label>
+            <label class="custom-control-label" for="{{ $item->judul.'0' }}">Belum</label>
         </div>
     </div>
 </div>

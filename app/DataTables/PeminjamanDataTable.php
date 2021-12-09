@@ -74,7 +74,7 @@ class PeminjamanDataTable extends DataTable
                     ->setTableId('peminjaman-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-                    ->orderBy([1, 'DESC']);
+                    ->orderBy([1, 'ASC']);
     }
 
     /**

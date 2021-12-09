@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\Anggota;
+use App\Models\Kelas;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
 
@@ -47,7 +48,7 @@ class AnggotaDataTable extends DataTable
      */
     public function query(Anggota $model)
     {
-        return $model->newQuery();
+        return $model->with('kelas')->orderBy(Kelas::select('kelas')->whereColumn('kelas.id', 'anggota.kelas_id'));
     }
 
     /**
@@ -61,7 +62,7 @@ class AnggotaDataTable extends DataTable
                     ->setTableId('anggota-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-                    ->orderBy([3, 'ASC']);
+                    ->orderBy([2, 'ASC']);
     }
 
     /**

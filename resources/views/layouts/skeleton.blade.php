@@ -19,6 +19,20 @@
 <script src="{{ asset('js/vendor.js') }}"></script>
 <script src="{{ asset('js/popper.js') }}"></script>
 <script src="{{ asset('js/app.js') }}"></script>
+<script>
+    toastr.options = {
+        closeButton: true,
+        progressBar: true,
+        showDuration: "300",
+        hideDuration: "1000",
+        timeOut: "5000",
+        extendedTimeOut: "1000",
+        showEasing: "swing",
+        hideEasing: "linear",
+        showMethod: "fadeIn",
+        hideMethod: "fadeOut",
+    };
+</script>
 @stack('javascript')
 </body>
 </html>

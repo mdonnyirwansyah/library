@@ -39,7 +39,8 @@
                 {data: 'nama', name: 'nama'},
                 {data: 'jenis_kelamin', name: 'jenis_kelamin'},
                 {data: 'kelas', name: 'kelas'},
-            ]
+            ],
+            order: [[4, 'desc'], [2, 'asc']]
         });
     });
 </script>
