@@ -47,7 +47,7 @@ class BukuDataTable extends DataTable
      */
     public function query(Buku $model)
     {
-        return $model->newQuery();
+        return $model->orderBy('kategori_id');
     }
 
     /**
