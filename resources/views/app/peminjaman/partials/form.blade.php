@@ -27,7 +27,7 @@
     <div class="col-sm-12 col-md-7">
         <select class="form-select select2" style="width: 100%" name="buku[]" id="buku" multiple>
           @foreach ($buku as $item)
-          <option value="{{ $item->id }}" @isset($peminjaman) @if(in_array($item->id, $peminjaman->buku->pluck('id')->toArray())) selected @endif @endisset>{{ $item->kode.' - '.$item->judul.' '.$item->kategori->nama }}</option>
+          <option value="{{ $item->id }}" @isset($peminjaman) @if(in_array($item->id, $peminjaman->buku->pluck('id')->toArray())) selected @endif @endisset>{{ $item->kode.' - '.$item->judul.' - '.$item->kategori->kategori }}</option>
           @endforeach
         </select>
       <small class="invalid-feedback buku_err"></small>
