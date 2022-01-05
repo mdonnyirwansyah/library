@@ -14,7 +14,7 @@ class CreateTahunPelajaransTable extends Migration
     public function up()
     {
         Schema::create('tahun_pelajaran', function (Blueprint $table) {
-            $table->id();
+            $table->integerIncrements('id');
             $table->string('tahun');
             $table->string('slug');
             $table->timestamps();

@@ -14,9 +14,9 @@ class CreateBukuPeminjamanTable extends Migration
     public function up()
     {
         Schema::create('buku_peminjaman', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('buku_id')->constrained('buku', 'id')->onUpdate('cascade')->onDelete('restrict');
-            $table->foreignId('peminjaman_id')->constrained('peminjaman', 'id')->onUpdate('cascade')->onDelete('restrict');
+            $table->integerIncrements('id');
+            $table->integer('buku_id');
+            $table->integer('peminjaman_id');
             $table->integer('jumlah')->default(1);
         });
     }

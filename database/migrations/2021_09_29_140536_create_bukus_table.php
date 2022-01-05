@@ -14,10 +14,10 @@ class CreateBukusTable extends Migration
     public function up()
     {
         Schema::create('buku', function (Blueprint $table) {
-            $table->id();
+            $table->integerIncrements('id');
             $table->string('kode')->unique();
             $table->string('judul');
-            $table->foreignId('kategori_id')->nullable()->constrained('kategori', 'id')->onDelete('restrict')->onUpdate('cascade');
+            $table->integer('kategori_id')->nullable();
             $table->string('pengarang');
             $table->string('penerbit');
             $table->integer('tahun');

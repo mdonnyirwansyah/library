@@ -64,7 +64,7 @@ class BukuController extends Controller
                 $buku->penerbit = $request->penerbit;
                 $buku->tahun = $request->tahun;
                 $buku->stok = $request->stok;
-                $buku->slug = Str::slug($request->judul);
+                $buku->slug = Str::slug($request->kode.'-'.$request->judul);
                 $buku->save();
 
                 return response()->json(['success' => 'Data baru berhasil ditambah!']);
@@ -101,7 +101,7 @@ class BukuController extends Controller
             $buku->penerbit = $request->penerbit;
             $buku->tahun = $request->tahun;
             $buku->stok = $request->stok;
-            $buku->slug = Str::slug($request->judul);
+            $buku->slug = Str::slug($request->kode.'-'.$request->judul);
             $buku->save();
 
             return response()->json(['success' => 'Data berhasil diperbarui!']);

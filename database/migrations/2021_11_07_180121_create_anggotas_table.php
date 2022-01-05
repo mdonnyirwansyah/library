@@ -14,10 +14,10 @@ class CreateAnggotasTable extends Migration
     public function up()
     {
         Schema::create('anggota', function (Blueprint $table) {
-            $table->id();
+            $table->integerIncrements('id');
             $table->string('nis')->unique();
             $table->string('nama');
-            $table->foreignId('kelas_id')->nullable()->constrained('kelas', 'id')->onUpdate('cascade')->onDelete('restrict');
+            $table->integer('kelas_id')->nullable();
             $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan']);
             $table->string('slug');
             $table->timestamps();
